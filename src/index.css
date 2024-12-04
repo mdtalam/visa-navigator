@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* font */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+body {
+  font-family: "Roboto", serif;
+}
+
+/* Colors for the Website
+Primary Color: #1E3A8A (Deep Blue)
+Secondary Color: #3B82F6 (Bright Blue)
+Accent Color: #F59E0B (Golden Yellow)
+Background Color: #F3F4F6 (Light Gray)
+Text Color: #111827 (Dark Gray/Black) */
