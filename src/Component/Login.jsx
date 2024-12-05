@@ -1,15 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Login = () => {
+    const {userLogin,setUser} = useContext(AuthContext);
+
 //   const [email, setEmail] = useState("");
 //   const [password, setPassword] = useState("");
 
-//   const handleLogin = (e) => {
-//     e.preventDefault();
-//     // Handle login logic here
-//     alert(`Logging in with Email: ${email}`);
-//   };
+  const handleLogin = event => {
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    const loginUser = {email,password}
+    userLogin(email,password)
+    .then(result=>{
+        const user = result.user;
+        setUser(user);
+    })
+    .catch(error=>{
+        const errorMessage = error.message;
+        alert(errorMessage)
+    })
+   
+  };
 
 //   const handleForgetPassword = () => {
 //     // Handle forget password logic here
@@ -25,7 +40,7 @@ const Login = () => {
         </h2>
 
         {/* Form */}
-        <form className="space-y-4">
+        <form onSubmit={handleLogin} className="space-y-4">
           {/* Email Field */}
           <div>
             <label htmlFor="email" className="block text-gray-700 mb-1">
@@ -35,7 +50,6 @@ const Login = () => {
               name="email"
               type="email"
               id="email"
-              value=""
               placeholder="Enter your email"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               required
@@ -51,7 +65,6 @@ const Login = () => {
             name="password"
               type="password"
               id="password"
-              value=""
               placeholder="Enter your password"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               required

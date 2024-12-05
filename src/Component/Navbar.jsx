@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const {user,logOutUser}= useContext(AuthContext);
+
+
 
   return (
     <nav className="bg-primary text-white">
@@ -10,6 +14,7 @@ const Navbar = () => {
         {/* Website Logo */}
         <div className="text-xl font-bold">
           <a href="/">Visa Navigator</a>
+          <p>{user?.email}</p>
         </div>
 
         {/* Desktop Links */}
@@ -76,21 +81,45 @@ const Navbar = () => {
           </li>
         </ul>
 
-        {/* Authentication Buttons */}
-        <div className="hidden md:flex space-x-4">
-          <Link
+        {/* Conditional Authentication Buttons */}
+        <div className="hidden md:flex space-x-4 items-center">
+          {!user ? (
+            <>
+              <Link
             to="/auth/login"
             className="bg-secondary px-4 py-2 rounded hover:bg-accent transition"
           >
             Login
           </Link>
-          <Link
+              <Link
             to="/auth/register"
             className="bg-accent px-4 py-2 rounded hover:bg-secondary transition"
           >
             Register
           </Link>
+            </>
+          ) : (
+            <>
+              <div className="relative group">
+                <img
+                  src={user?.photoURL}
+                  alt="User"
+                  className="w-10 h-10 rounded-full cursor-pointer"
+                />
+                <div className="absolute top-12 left-0 bg-white text-black px-4 py-2 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                  {user?.name}
+                </div>
+              </div>
+              <button
+                onClick={logOutUser}
+                className="bg-secondary px-4 py-2 rounded hover:bg-accent transition"
+              >
+                Logout
+              </button>
+            </>
+          )}
         </div>
+
 
         {/* Mobile Menu Button */}
         <button

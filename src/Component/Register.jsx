@@ -1,7 +1,34 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Register = () => {
+    const {createNewUser,setUser} = useContext(AuthContext);
+
+    const handleRegister = event => {
+        event.preventDefault();
+        const form = event.target;
+        const name = form.name.value;
+        const email = form.email.value;
+        const photo = form.photo.value;
+        const password = form.password.value;
+        const newUser = {name,email,photo,password}
+        console.log(newUser)
+
+        createNewUser(email,password)
+        .then(result=>{
+            const user = result.user;
+            setUser(user)
+        })
+        .catch(error=>{
+            const errorCode= error.code;
+            const errorMessage = error.message;
+            console.log(errorCode,errorMessage)
+        })
+    }
+
+
+
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center mb-10 mt-10">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-sm w-full">
@@ -11,7 +38,7 @@ const Register = () => {
         </h2>
 
         {/* Form */}
-        <form className="space-y-4">
+        <form onSubmit={handleRegister} className="space-y-4">
           {/* Name Field */}
           <div>
             <label htmlFor="name" className="block text-gray-700 mb-1">
@@ -20,8 +47,7 @@ const Register = () => {
             <input
               name="name"
               type="text"
-              id="name"
-              value=""
+              id="name"             
               placeholder="Enter your name"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               required
@@ -36,9 +62,7 @@ const Register = () => {
             <input
               name="email"
               type="email"
-              id="email"
-              value=""
-              
+              id="email"  
               placeholder="Enter your email"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               required
@@ -54,7 +78,6 @@ const Register = () => {
               name="photo"
               type="text"
               id="photoURL"
-              value=""
               placeholder="Enter your profile photo URL"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             />
@@ -69,7 +92,6 @@ const Register = () => {
               name="password"
               type="password"
               id="password"
-              value=""
               placeholder="Enter your password"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               required
