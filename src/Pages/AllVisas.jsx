@@ -4,6 +4,7 @@ import AllVisaCard from '../Component/AllVisaCard';
 
 const AllVisas = () => {
     const visas = useLoaderData();
+    console.log(visas._id)
 
     return (
         <div className='container mx-auto'>

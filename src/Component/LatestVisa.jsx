@@ -1,109 +1,94 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-// Sample Data for Latest Visas
-const latestVisa = [
-  {
-    id: 1,
-    country: "Canada",
-    image: "https://via.placeholder.com/300", // Replace with actual image URL
-    visaType: "Tourist Visa",
-    processingTime: "7-10 days",
-    fee: "$150",
-    validity: "6 months",
-    applicationMethod: "Online",
-  },
-  {
-    id: 2,
-    country: "Australia",
-    image: "https://via.placeholder.com/300",
-    visaType: "Work Visa",
-    processingTime: "15-20 days",
-    fee: "$250",
-    validity: "1 year",
-    applicationMethod: "Offline",
-  },
-  {
-    id: 3,
-    country: "Australia",
-    image: "https://via.placeholder.com/300",
-    visaType: "Work Visa",
-    processingTime: "15-20 days",
-    fee: "$250",
-    validity: "1 year",
-    applicationMethod: "Offline",
-  },
-  // Add more visa data here
-];
+import Loading from "./Loading";
 
 const LatestVisas = () => {
+  const [latestVisas, setLatestVisas] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleSeeDetails = (visaId) => {
-    navigate(`/visa-details/${visaId}`); // Navigate to the visa details page
-  };
+  // Fetch latest visas (last 6 sorted by creation date)
+  useEffect(() => {
+    const fetchLatestVisas = async () => {
+        const response = await fetch("http://localhost:5000/visas/latest");
+        if (!response.ok) {
+          throw new Error("Failed to fetch visas");
+        }
+        const data = await response.json();
+        setLatestVisas(data);
+        setIsLoading(false);
+      
+    };
 
-  const handleSeeAllVisas = () => {
-    navigate("/all-visas"); // Navigate to the All Visas page
-  };
+    fetchLatestVisas();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="container mx-auto text-center py-10">
+        <Loading></Loading>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto text-center py-10">
+        <p className="text-red-500">{error}</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="py-10 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-semibold text-center mb-6">Latest Visas</h2>
-
-        {/* Visa Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {latestVisa.map((visa) => (
+    <div className="container mx-auto py-10 px-4">
+      <h1 className="text-3xl font-bold text-center mb-6">Latest Visas</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {latestVisas.length > 0 ? (
+          latestVisas.map((visa) => (
             <div
-              key={visa.id}
-              className="bg-white shadow-md rounded-lg overflow-hidden"
+              key={visa._id}
+              className="border rounded-lg shadow-lg overflow-hidden"
             >
               <img
-                src={visa.image}
-                alt={`${visa.country} Visa`}
-                className="h-40 w-full object-cover"
+                src={visa.countryImage}
+                alt={visa.countryName}
+                className="w-full h-40 object-cover"
               />
               <div className="p-4">
-                <h3 className="text-xl font-bold mb-2">{visa.country}</h3>
+                <h2 className="text-xl font-bold mb-2">{visa.countryName}</h2>
                 <p>
-                  <span className="font-semibold">Visa Type:</span>{" "}
-                  {visa.visaType}
+                  <strong>Visa Type:</strong> {visa.visaType}
                 </p>
                 <p>
-                  <span className="font-semibold">Processing Time:</span>{" "}
-                  {visa.processingTime}
+                  <strong>Processing Time:</strong> {visa.processingTime} days
                 </p>
                 <p>
-                  <span className="font-semibold">Fee:</span> {visa.fee}
+                  <strong>Fee:</strong> ${visa.fee}
                 </p>
                 <p>
-                  <span className="font-semibold">Validity:</span> {visa.validity}
-                </p>
-                <p>
-                  <span className="font-semibold">Application Method:</span>{" "}
-                  {visa.applicationMethod}
+                  <strong>Validity:</strong> {visa.validity}
                 </p>
                 <button
-                  className="mt-4 px-4 py-2 bg-primary text-white rounded hover:bg-secondary w-full"
-                  onClick={() => handleSeeDetails(visa.id)}
+                  onClick={() => navigate(`/visa-details/${visa._id}`)}
+                  className="mt-4 w-full bg-primary text-white px-4 py-2 rounded hover:bg-secondary transition"
                 >
                   See Details
                 </button>
               </div>
             </div>
-          ))}
-        </div>
-
-        {/* See All Visas Button */}
-        <div className="text-center mt-6">
-          <button
-            className="px-6 py-3 bg-primary text-white rounded hover:bg-secondary"
-            onClick={handleSeeAllVisas}
-          >
-            See All Visas
-          </button>
-        </div>
+          ))
+        ) : (
+          <p className="text-center col-span-full">No visas available at the moment.</p>
+        )}
+      </div>
+      <div className="text-center mt-10">
+        <button
+          className="bg-secondary text-white px-6 py-2 rounded-lg hover:bg-accent transition"
+          onClick={() => navigate("/all-visas")}
+        >
+          See All Visas
+        </button>
       </div>
     </div>
   );

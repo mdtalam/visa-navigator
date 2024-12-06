@@ -53,7 +53,7 @@ import PrivetRoute from "./PrivetRoute";
                 <VisaDetails></VisaDetails>
                 </PrivetRoute>,
             loader: ({params}) => fetch(`http://localhost:5000/visas/${params.id}`)
-        }
+        },
       ]
     },
     {

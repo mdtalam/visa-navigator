@@ -3,12 +3,12 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import Modal from "../Component/Modal";
 import { AuthContext } from "../Provider/AuthProvider";
- // A reusable modal component
 
 const VisaDetails = () => {
   const loadedData = useLoaderData();
 
-  const {_id,
+  const {
+    _id,
     countryImage,
     countryName,
     visaType,
@@ -18,12 +18,12 @@ const VisaDetails = () => {
     ageRestriction,
     fee,
     validity,
-    applicationMethod,} = loadedData
-
+    applicationMethod,
+  } = loadedData;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({});
-  const { user } = useContext(AuthContext); // Assume user info is available from context
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   // Handle form changes
@@ -43,8 +43,15 @@ const VisaDetails = () => {
       appliedDate: new Date().toISOString().split("T")[0],
       fee: fee,
       visaId: _id,
+      countryName: countryName,
+      visaType: visaType,
+      processingTime: processingTime,
+      requiredDocuments: requiredDocuments,
+      description: description,
+      ageRestriction: ageRestriction,
+      validity: validity,
+      applicationMethod: applicationMethod,
     };
-    
 
     // Save applicationData to the database
     fetch("http://localhost:5000/application", {
@@ -54,26 +61,28 @@ const VisaDetails = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
+        console.log(data);
         setIsModalOpen(false);
-        if(data.insertedId){
+        if (data.insertedId) {
           Swal.fire({
             title: 'Success!',
             text: 'Visa application submitted successfully!',
             icon: 'success',
-            confirmButtonText: 'Close'
-          })
+            confirmButtonText: 'Close',
+          });
         }
         navigate("/my-visa-applications");
       })
-      
+      .catch((error) => {
+        console.error('Error:', error);
+        Swal.fire({
+          title: 'Error!',
+          text: 'There was an issue submitting your application. Please try again.',
+          icon: 'error',
+          confirmButtonText: 'Close',
+        });
+      });
   };
-
-  // Redirect if not logged in
-//   if (!user) {
-//     navigate("/login");
-//     return null;
-//   }
 
   return (
     <div className="container mx-auto py-10 px-4 w-2/3 mb-10">
@@ -86,36 +95,28 @@ const VisaDetails = () => {
       />
       <div className="text-gray-800 space-y-4 *:text-lg">
         <p>
-          <strong>Visa Type:</strong> 
-          {visaType}
+          <strong>Visa Type:</strong> {visaType}
         </p>
         <p>
-          <strong>Processing Time:</strong> 
-          {processingTime} days
+          <strong>Processing Time:</strong> {processingTime} days
         </p>
         <p>
-          <strong>Required Documents:</strong>{" "}
-          {requiredDocuments.join(", ")}
+          <strong>Required Documents:</strong> {requiredDocuments.join(", ")}
         </p>
         <p>
-          <strong>Age Restriction:</strong> 
-          {ageRestriction}+
+          <strong>Age Restriction:</strong> {ageRestriction}+
         </p>
         <p>
-          <strong>Fee:</strong> 
-          ${fee}
+          <strong>Fee:</strong> ${fee}
         </p>
         <p>
-          <strong>Validity:</strong> 
-          {validity}
+          <strong>Validity:</strong> {validity}
         </p>
         <p>
-          <strong>Application Method:</strong> 
-          {applicationMethod}
+          <strong>Application Method:</strong> {applicationMethod}
         </p>
         <p>
-          <strong>Description:</strong> 
-          {description}
+          <strong>Description:</strong> {description}
         </p>
       </div>
 
