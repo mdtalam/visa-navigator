@@ -44,6 +44,7 @@ const VisaDetails = () => {
       fee: fee,
       visaId: _id,
       countryName: countryName,
+      countryImage: countryImage,
       visaType: visaType,
       processingTime: processingTime,
       requiredDocuments: requiredDocuments,

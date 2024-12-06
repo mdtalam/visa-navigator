@@ -47,7 +47,7 @@ const MyVisa = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         // Send delete request to the backend
-        fetch(`http://localhost:5000/visaApplications/cancel/${applicationId}`, {
+        fetch(`http://localhost:5000/application/cancel/${applicationId}`, {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
         })
@@ -68,7 +68,7 @@ const MyVisa = () => {
     <div className="container mx-auto py-10 px-4">
       <h1 className="text-3xl font-bold text-center mb-6">My Visa Applications</h1>
 
-      {applications.length === 0 ? (
+      {applications?.length === 0 ? (
         <p className="text-center">You have no visa applications.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
