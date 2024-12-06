@@ -2,12 +2,12 @@
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAzko5LSc4joEgB33B1bb6gx249fq3GFRs",
-  authDomain: "visa-navigator-client-1777c.firebaseapp.com",
-  projectId: "visa-navigator-client-1777c",
-  storageBucket: "visa-navigator-client-1777c.firebasestorage.app",
-  messagingSenderId: "496905841870",
-  appId: "1:496905841870:web:ef2a132ce52699d058349f"
+  apiKey: import.meta.env.VITE_apiKey,
+  authDomain: import.meta.env.VITE_authDomain,
+  projectId: import.meta.env.VITE_projectId,
+  storageBucket: import.meta.env.VITE_storageBucket,
+  messagingSenderId: import.meta.env.VITE_messagingSenderId,
+  appId: import.meta.env.VITE_appId,
 };
 
 // Initialize Firebase
