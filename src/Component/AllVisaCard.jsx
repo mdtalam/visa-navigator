@@ -15,9 +15,8 @@ const AllVisaCard = ({ visa }) => {
     validity,
     applicationMethod,
   } = visa;
-  console.log(_id)
-  // const {_id,countryImage,countryName,visaType,processingTime,requiredDocuments,description,ageRestriction,fee,validity,applicationMethod} = visa;
-  // console.log(visaData)
+  
+  
   const navigate = useNavigate();
   return (
     <div>
