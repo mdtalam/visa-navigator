@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import Loading from "../Component/Loading";
 import Modal from "../Component/Modal";
 import { AuthContext } from "../Provider/AuthProvider";
 
@@ -62,7 +63,6 @@ const MyAddedVisas = () => {
       ...selectedVisa,
       [e.target.name]: e.target.value,
     };
-
     fetch(`http://localhost:5000/application/update/${selectedVisa._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -70,7 +70,8 @@ const MyAddedVisas = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.message === "Visa updated successfully") {
+        console.log(data)
+        if (data.modifiedCount>0) {
           setMyVisas(
             myVisas.map((visa) =>
               visa._id === selectedVisa._id
@@ -85,7 +86,7 @@ const MyAddedVisas = () => {
   };
 
   if (isLoading) {
-    return <div className="text-center">Loading...</div>;
+    <Loading></Loading>
   }
 
   return (
@@ -146,200 +147,169 @@ const MyAddedVisas = () => {
 
       {/* Update Visa Modal */}
       {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)} title="Update Visa">
-          <form
-            onSubmit={handleUpdate}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
-          >
-            {/* Country Name */}
-            <div className="col-span-1">
-              <label className="block text-gray-600">Country Name</label>
-              <input
-                type="text"
-                name="countryName"
-                defaultValue={selectedVisa?.countryName}
-                onChange={(e) =>
-                  setSelectedVisa({
-                    ...selectedVisa,
-                    countryName: e.target.value,
-                  })
-                }
-                className="w-full px-3 py-2 border rounded"
-                required
-              />
-            </div>
+  <Modal onClose={() => setIsModalOpen(false)} title="Update Visa">
+    <form onSubmit={handleUpdate} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+      {/* Visa Type (Dropdown) */}
+      <div className="col-span-1">
+        <label className="block text-gray-600">Visa Type</label>
+        <select
+          name="visaType"
+          defaultValue={selectedVisa?.visaType}
+          onChange={(e) =>
+            setSelectedVisa({ ...selectedVisa, visaType: e.target.value })
+          }
+          className="w-full px-3 py-2 border rounded"
+          required
+        >
+          <option value="Tourist visa">Tourist visa</option>
+          <option value="Student visa">Student visa</option>
+          <option value="Official visa">Official visa</option>
+          <option value="Business visa">Business visa</option>
+          <option value="Transit visa">Transit visa</option>
+        </select>
+      </div>
 
-            {/* Country Image */}
-            <div className="col-span-1">
-              <label className="block text-gray-600">Country Image URL</label>
-              <input
-                type="text"
-                name="countryImage"
-                defaultValue={selectedVisa?.countryImage}
-                onChange={(e) =>
-                  setSelectedVisa({
-                    ...selectedVisa,
-                    countryImage: e.target.value,
-                  })
-                }
-                className="w-full px-3 py-2 border rounded"
-                required
-              />
-            </div>
+      {/* Processing Time */}
+      <div className="col-span-1">
+        <label className="block text-gray-600">Processing Time (days)</label>
+        <input
+          type="number"
+          name="processingTime"
+          defaultValue={selectedVisa?.processingTime}
+          onChange={(e) =>
+            setSelectedVisa({ ...selectedVisa, processingTime: e.target.value })
+          }
+          className="w-full px-3 py-2 border rounded"
+          required
+        />
+      </div>
 
-            {/* Visa Type */}
-            <div className="col-span-1">
-              <label className="block text-gray-600">Visa Type</label>
-              <input
-                type="text"
-                name="visaType"
-                defaultValue={selectedVisa?.visaType}
-                onChange={(e) =>
-                  setSelectedVisa({ ...selectedVisa, visaType: e.target.value })
-                }
-                className="w-full px-3 py-2 border rounded"
-                required
-              />
-            </div>
+      {/* Fee */}
+      <div className="col-span-1">
+        <label className="block text-gray-600">Fee (USD)</label>
+        <input
+          type="number"
+          name="fee"
+          defaultValue={selectedVisa?.fee}
+          onChange={(e) =>
+            setSelectedVisa({ ...selectedVisa, fee: e.target.value })
+          }
+          className="w-full px-3 py-2 border rounded"
+          required
+        />
+      </div>
 
-            {/* Processing Time */}
-            <div className="col-span-1">
-              <label className="block text-gray-600">
-                Processing Time (days)
-              </label>
-              <input
-                type="number"
-                name="processingTime"
-                defaultValue={selectedVisa?.processingTime}
-                onChange={(e) =>
-                  setSelectedVisa({
-                    ...selectedVisa,
-                    processingTime: e.target.value,
-                  })
-                }
-                className="w-full px-3 py-2 border rounded"
-                required
-              />
-            </div>
+      {/* Validity */}
+      <div className="col-span-1">
+        <label className="block text-gray-600">Validity (months)</label>
+        <input
+          type="number"
+          name="validity"
+          defaultValue={selectedVisa?.validity}
+          onChange={(e) =>
+            setSelectedVisa({ ...selectedVisa, validity: e.target.value })
+          }
+          className="w-full px-3 py-2 border rounded"
+          required
+        />
+      </div>
 
-            {/* Fee */}
-            <div className="col-span-1">
-              <label className="block text-gray-600">Fee (USD)</label>
-              <input
-                type="number"
-                name="fee"
-                defaultValue={selectedVisa?.fee}
-                onChange={(e) =>
-                  setSelectedVisa({ ...selectedVisa, fee: e.target.value })
-                }
-                className="w-full px-3 py-2 border rounded"
-                required
-              />
-            </div>
+      {/* Application Method */}
+      <div className="col-span-1">
+        <label className="block text-gray-600">Application Method</label>
+        <input
+          type="text"
+          name="applicationMethod"
+          defaultValue={selectedVisa?.applicationMethod}
+          onChange={(e) =>
+            setSelectedVisa({
+              ...selectedVisa,
+              applicationMethod: e.target.value,
+            })
+          }
+          className="w-full px-3 py-2 border rounded"
+          required
+        />
+      </div>
 
-            {/* Validity */}
-            <div className="col-span-1">
-              <label className="block text-gray-600">Validity</label>
-              <input
-                type="text"
-                name="validity"
-                defaultValue={selectedVisa?.validity}
-                onChange={(e) =>
-                  setSelectedVisa({ ...selectedVisa, validity: e.target.value })
-                }
-                className="w-full px-3 py-2 border rounded"
-                required
-              />
-            </div>
+      {/* Applied Date */}
+      <div className="col-span-1">
+        <label className="block text-gray-600">Applied Date</label>
+        <input
+          type="date"
+          name="appliedDate"
+          defaultValue={selectedVisa?.appliedDate}
+          onChange={(e) =>
+            setSelectedVisa({ ...selectedVisa, appliedDate: e.target.value })
+          }
+          className="w-full px-3 py-2 border rounded"
+          required
+        />
+      </div>
 
-            {/* Application Method */}
-            <div className="col-span-1">
-              <label className="block text-gray-600">Application Method</label>
-              <input
-                type="text"
-                name="applicationMethod"
-                defaultValue={selectedVisa?.applicationMethod}
-                onChange={(e) =>
-                  setSelectedVisa({
-                    ...selectedVisa,
-                    applicationMethod: e.target.value,
-                  })
-                }
-                className="w-full px-3 py-2 border rounded"
-                required
-              />
-            </div>
+      {/* Applicant's First Name */}
+      <div className="col-span-1">
+        <label className="block text-gray-600">First Name</label>
+        <input
+          type="text"
+          name="firstName"
+          defaultValue={selectedVisa?.firstName}
+          onChange={(e) =>
+            setSelectedVisa({ ...selectedVisa, firstName: e.target.value })
+          }
+          className="w-full px-3 py-2 border rounded"
+          required
+        />
+      </div>
 
-            {/* Required Documents */}
-            <div className="col-span-1">
-              <label className="block text-gray-600">
-                Required Documents (Comma Separated)
-              </label>
-              <input
-                type="text"
-                name="requiredDocuments"
-                defaultValue={selectedVisa?.requiredDocuments?.join(", ")}
-                onChange={(e) =>
-                  setSelectedVisa({
-                    ...selectedVisa,
-                    requiredDocuments: e.target.value
-                      .split(",")
-                      .map((doc) => doc.trim()),
-                  })
-                }
-                className="w-full px-3 py-2 border rounded"
-                required
-              />
-            </div>
+      {/* Applicant's Last Name */}
+      <div className="col-span-1">
+        <label className="block text-gray-600">Last Name</label>
+        <input
+          type="text"
+          name="lastName"
+          defaultValue={selectedVisa?.lastName}
+          onChange={(e) =>
+            setSelectedVisa({ ...selectedVisa, lastName: e.target.value })
+          }
+          className="w-full px-3 py-2 border rounded"
+          required
+        />
+      </div>
 
-            {/* Description */}
-            <div className="col-span-2">
-              <label className="block text-gray-600">Description</label>
-              <textarea
-                name="description"
-                defaultValue={selectedVisa?.description}
-                onChange={(e) =>
-                  setSelectedVisa({
-                    ...selectedVisa,
-                    description: e.target.value,
-                  })
-                }
-                className="w-full px-3 py-2 border rounded"
-                rows="4"
-                required
-              ></textarea>
-            </div>
+      {/* Applicant's Email */}
+      {/* <div className="col-span-2">
+        <label className="block text-gray-600">Applicant's Email</label>
+        <input
+          type="email"
+          name="applicantEmail"
+          Value={selectedVisa?.email}
+          onChange={(e) =>
+            setSelectedVisa({
+              ...selectedVisa,
+              applicantEmail: e.target.value,
+            })
+          }
+          className="w-full px-3 py-2 border rounded"
+          required
+        />
+      </div> */}
 
-            {/* Age Restriction */}
-            <div className="col-span-1">
-              <label className="block text-gray-600">Age Restriction</label>
-              <input
-                type="number"
-                name="ageRestriction"
-                defaultValue={selectedVisa?.ageRestriction}
-                onChange={(e) =>
-                  setSelectedVisa({
-                    ...selectedVisa,
-                    ageRestriction: e.target.value,
-                  })
-                }
-                className="w-full px-3 py-2 border rounded"
-                required
-              />
-            </div>
+      {/* Submit Button */}
+      <div className="col-span-2">
+        <button
+          type="submit"
+          className="w-full bg-primary text-white px-4 py-2 rounded hover:bg-secondary transition"
+        >
+          Update Visa
+        </button>
+      </div>
+    </form>
+  </Modal>
+)}
 
-            {/* Submit Button */}
-            <div className="col-span-2">
-              <button
-                type="submit"
-                className="w-full bg-primary text-white px-4 py-2 rounded hover:bg-secondary transition"
-              >
-                Update Visa
-              </button>
-            </div>
-          </form>
-        </Modal>
-      )}
+
     </div>
   );
 };
