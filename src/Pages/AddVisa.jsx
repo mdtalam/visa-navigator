@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 const AddVisa = () => {
   const [formValues, setFormValues] = useState({
@@ -30,25 +30,25 @@ const AddVisa = () => {
     console.log("Visa Details Submitted: ", formValues);
 
     // send data to server
-    fetch('http://localhost:5000/visas',{
-        method: 'POST',
-        headers: {
-            'content-type':'application/json'
-        },
-        body: JSON.stringify(formValues)
+    fetch("http://localhost:5000/visas", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(formValues),
     })
-    .then(res=>res.json())
-    .then(data=>{
-        console.log(data)
-        if(data.insertedId){
-            Swal.fire({
-                title: 'Success!',
-                text: 'Visa Added Successfully',
-                icon: 'success',
-                confirmButtonText: 'Close'
-              })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.insertedId) {
+          Swal.fire({
+            title: "Success!",
+            text: "Visa Added Successfully",
+            icon: "success",
+            confirmButtonText: "Close",
+          });
         }
-    })
+      });
   };
 
   return (
@@ -59,7 +59,10 @@ const AddVisa = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Country Image */}
             <div>
-              <label className="block text-gray-700 mb-2" htmlFor="countryImage">
+              <label
+                className="block text-gray-700 mb-2"
+                htmlFor="countryImage"
+              >
                 Country Image URL
               </label>
               <input
@@ -109,6 +112,8 @@ const AddVisa = () => {
                 <option value="Tourist visa">Tourist Visa</option>
                 <option value="Student visa">Student Visa</option>
                 <option value="Official visa">Official Visa</option>
+                <option value="Business visa">Business visa</option>
+                <option value="Transit visa">Transit visa</option>
               </select>
             </div>
 

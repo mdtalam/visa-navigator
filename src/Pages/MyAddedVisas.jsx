@@ -279,22 +279,17 @@ const MyAddedVisas = () => {
       </div>
 
       {/* Applicant's Email */}
-      {/* <div className="col-span-2">
+      <div className="col-span-2">
         <label className="block text-gray-600">Applicant's Email</label>
         <input
           type="email"
           name="applicantEmail"
           Value={selectedVisa?.email}
-          onChange={(e) =>
-            setSelectedVisa({
-              ...selectedVisa,
-              applicantEmail: e.target.value,
-            })
-          }
+          readOnly
           className="w-full px-3 py-2 border rounded"
           required
         />
-      </div> */}
+      </div>
 
       {/* Submit Button */}
       <div className="col-span-2">

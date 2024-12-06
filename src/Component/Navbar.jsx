@@ -1,12 +1,11 @@
 import React, { useContext, useState } from "react";
+import { FiMenu, FiX } from "react-icons/fi"; // Importing react-icons for hamburger and cross icons
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const {user,logOutUser}= useContext(AuthContext);
-
-
+  const { user, logOutUser } = useContext(AuthContext);
 
   return (
     <nav className="bg-primary text-white">
@@ -14,7 +13,6 @@ const Navbar = () => {
         {/* Website Logo */}
         <div className="text-xl font-bold">
           <a href="/">Visa Navigator</a>
-          <p>{user?.email}</p>
         </div>
 
         {/* Desktop Links */}
@@ -23,9 +21,7 @@ const Navbar = () => {
             <NavLink
               to="/"
               className={({ isActive }) =>
-                `hover:text-secondary ${
-                  isActive ? "bg-accent px-2 py-1 rounded-lg" : ""
-                }`
+                `hover:text-secondary ${isActive ? "bg-accent px-2 py-1 rounded-lg" : ""}`
               }
             >
               Home
@@ -35,9 +31,7 @@ const Navbar = () => {
             <NavLink
               to="/all-visas"
               className={({ isActive }) =>
-                `hover:text-secondary ${
-                  isActive ? "bg-accent px-2 py-1 rounded-lg" : ""
-                }`
+                `hover:text-secondary ${isActive ? "bg-accent px-2 py-1 rounded-lg" : ""}`
               }
             >
               All Visas
@@ -47,9 +41,7 @@ const Navbar = () => {
             <NavLink
               to="/add-visa"
               className={({ isActive }) =>
-                `hover:text-secondary ${
-                  isActive ? "bg-accent px-2 py-1 rounded-lg" : ""
-                }`
+                `hover:text-secondary ${isActive ? "bg-accent px-2 py-1 rounded-lg" : ""}`
               }
             >
               Add Visa
@@ -59,9 +51,7 @@ const Navbar = () => {
             <NavLink
               to="/my-added-visas"
               className={({ isActive }) =>
-                `hover:text-secondary ${
-                  isActive ? "bg-accent px-2 py-1 rounded-lg" : ""
-                }`
+                `hover:text-secondary ${isActive ? "bg-accent px-2 py-1 rounded-lg" : ""}`
               }
             >
               My Added Visas
@@ -71,9 +61,7 @@ const Navbar = () => {
             <NavLink
               to="/my-visa-applications"
               className={({ isActive }) =>
-                `hover:text-secondary ${
-                  isActive ? "bg-accent px-2 py-1 rounded-lg" : ""
-                }`
+                `hover:text-secondary ${isActive ? "bg-accent px-2 py-1 rounded-lg" : ""}`
               }
             >
               My Visa Applications
@@ -86,17 +74,17 @@ const Navbar = () => {
           {!user ? (
             <>
               <Link
-            to="/auth/login"
-            className="bg-secondary px-4 py-2 rounded hover:bg-accent transition"
-          >
-            Login
-          </Link>
+                to="/auth/login"
+                className="bg-secondary px-4 py-2 rounded hover:bg-accent transition"
+              >
+                Login
+              </Link>
               <Link
-            to="/auth/register"
-            className="bg-accent px-4 py-2 rounded hover:bg-secondary transition"
-          >
-            Register
-          </Link>
+                to="/auth/register"
+                className="bg-accent px-4 py-2 rounded hover:bg-secondary transition"
+              >
+                Register
+              </Link>
             </>
           ) : (
             <>
@@ -106,8 +94,8 @@ const Navbar = () => {
                   alt="User"
                   className="w-10 h-10 rounded-full cursor-pointer"
                 />
-                <div className="absolute top-12 left-0 bg-white text-black px-4 py-2 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
-                  {user?.name}
+                <div className="absolute top-12 z-10 left-0 bg-white text-black px-4 py-2 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
+                  <h1>{user?.displayName}</h1>
                 </div>
               </div>
               <button
@@ -120,13 +108,17 @@ const Navbar = () => {
           )}
         </div>
 
-
         {/* Mobile Menu Button */}
         <button
           className="md:hidden block"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
-          <span className="material-icons">menu</span>
+          
+          {isMenuOpen ? (
+            <FiX size={24} /> 
+          ) : (
+            <FiMenu size={24} /> 
+          )}
         </button>
       </div>
 
@@ -138,9 +130,7 @@ const Navbar = () => {
               <NavLink
                 to="/"
                 className={({ isActive }) =>
-                  `hover:text-secondary ${
-                    isActive ? "bg-accent px-2 py-1 rounded-lg" : ""
-                  }`
+                  `hover:text-secondary ${isActive ? "bg-accent px-2 py-1 rounded-lg" : ""}`
                 }
               >
                 Home
@@ -150,9 +140,7 @@ const Navbar = () => {
               <NavLink
                 to="/all-visas"
                 className={({ isActive }) =>
-                  `hover:text-secondary ${
-                    isActive ? "bg-accent px-2 py-1 rounded-lg" : ""
-                  }`
+                  `hover:text-secondary ${isActive ? "bg-accent px-2 py-1 rounded-lg" : ""}`
                 }
               >
                 All Visas
@@ -162,9 +150,7 @@ const Navbar = () => {
               <NavLink
                 to="/add-visa"
                 className={({ isActive }) =>
-                  `hover:text-secondary ${
-                    isActive ? "bg-accent px-2 py-1 rounded-lg" : ""
-                  }`
+                  `hover:text-secondary ${isActive ? "bg-accent px-2 py-1 rounded-lg" : ""}`
                 }
               >
                 Add Visa
@@ -174,9 +160,7 @@ const Navbar = () => {
               <NavLink
                 to="/my-added-visas"
                 className={({ isActive }) =>
-                  `hover:text-secondary ${
-                    isActive ? "bg-accent px-2 py-1 rounded-lg" : ""
-                  }`
+                  `hover:text-secondary ${isActive ? "bg-accent px-2 py-1 rounded-lg" : ""}`
                 }
               >
                 My Added Visas
@@ -186,9 +170,7 @@ const Navbar = () => {
               <NavLink
                 to="/my-visa-applications"
                 className={({ isActive }) =>
-                  `hover:text-secondary ${
-                    isActive ? "bg-accent px-2 py-1 rounded-lg" : ""
-                  }`
+                  `hover:text-secondary ${isActive ? "bg-accent px-2 py-1 rounded-lg" : ""}`
                 }
               >
                 My Visa Applications
@@ -197,7 +179,7 @@ const Navbar = () => {
             <div className="flex flex-col space-y-4">
               <Link
                 to="/auth/login"
-                className="bg-secondary px-4 py-2 rounded hover:bg-accent transition"
+                className="bg-secondary text-center px-4 py-2 rounded hover:bg-accent transition"
               >
                 Login
               </Link>

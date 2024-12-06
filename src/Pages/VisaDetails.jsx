@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 import Modal from "../Component/Modal";
 import { AuthContext } from "../Provider/AuthProvider";
 
@@ -40,7 +40,7 @@ const VisaDetails = () => {
       email: user?.email,
       firstName: formData.firstName || "",
       lastName: formData.lastName || "",
-      appliedDate: new Date().toISOString().split("T")[0],
+      appliedDate: formData.appliedDate || "",
       fee: fee,
       visaId: _id,
       countryName: countryName,
@@ -66,21 +66,21 @@ const VisaDetails = () => {
         setIsModalOpen(false);
         if (data.insertedId) {
           Swal.fire({
-            title: 'Success!',
-            text: 'Visa application submitted successfully!',
-            icon: 'success',
-            confirmButtonText: 'Close',
+            title: "Success!",
+            text: "Visa application submitted successfully!",
+            icon: "success",
+            confirmButtonText: "Close",
           });
         }
         navigate("/my-visa-applications");
       })
       .catch((error) => {
-        console.error('Error:', error);
+        console.error("Error:", error);
         Swal.fire({
-          title: 'Error!',
-          text: 'There was an issue submitting your application. Please try again.',
-          icon: 'error',
-          confirmButtonText: 'Close',
+          title: "Error!",
+          text: "There was an issue submitting your application. Please try again.",
+          icon: "error",
+          confirmButtonText: "Close",
         });
       });
   };
@@ -165,10 +165,14 @@ const VisaDetails = () => {
             <div>
               <label className="block text-gray-600">Applied Date</label>
               <input
-                type="text"
-                value={new Date().toISOString().split("T")[0]}
-                readOnly
-                className="w-full px-3 py-2 border rounded bg-gray-100"
+                type="date"
+                name="appliedDate"
+                value={
+                  formData.appliedDate || new Date().toISOString().split("T")[0]
+                } // Default to today's date
+                onChange={handleChange} // Update the formData state on change
+                className="w-full px-3 py-2 border rounded"
+                required
               />
             </div>
             <div>

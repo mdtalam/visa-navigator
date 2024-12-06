@@ -1,9 +1,13 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const Login = () => {
     const {userLogin,setUser} = useContext(AuthContext);
+    const [userError, setUserError] = useState({})
+    const location = useLocation();
+    const navigate = useNavigate();
+    
 
 //   const [email, setEmail] = useState("");
 //   const [password, setPassword] = useState("");
@@ -18,10 +22,10 @@ const Login = () => {
     .then(result=>{
         const user = result.user;
         setUser(user);
+        navigate(location?.state ? location.state : "/");
     })
     .catch(error=>{
-        const errorMessage = error.message;
-        alert(errorMessage)
+        setUserError({...userError, login: error.code})
     })
    
   };
@@ -43,7 +47,7 @@ const Login = () => {
         <form onSubmit={handleLogin} className="space-y-4">
           {/* Email Field */}
           <div>
-            <label htmlFor="email" className="block text-gray-700 mb-1">
+            <label type="email" className="block text-gray-700 mb-1">
               Email Address
             </label>
             <input
@@ -58,7 +62,7 @@ const Login = () => {
 
           {/* Password Field */}
           <div>
-            <label htmlFor="password" className="block text-gray-700 mb-1">
+            <label type="password" className="block text-gray-700 mb-1">
               Password
             </label>
             <input
@@ -70,6 +74,11 @@ const Login = () => {
               required
             />
           </div>
+          {
+            userError.login && <label type="password" className="block text-red-600 mb-1">
+            {userError.login}
+          </label>
+          }
 
           {/* Forget Password Link */}
           <div className="text-right">
