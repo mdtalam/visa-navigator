@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 import Modal from "../Component/Modal";
 import { AuthContext } from "../Provider/AuthProvider";
@@ -24,7 +24,7 @@ const VisaDetails = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({});
   const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // Handle form changes
   const handleChange = (e) => {
@@ -62,7 +62,6 @@ const VisaDetails = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setIsModalOpen(false);
         if (data.insertedId) {
           Swal.fire({
@@ -72,7 +71,7 @@ const VisaDetails = () => {
             confirmButtonText: "Close",
           });
         }
-        navigate("/my-visa-applications");
+        // navigate("/my-visa-applications");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -111,7 +110,7 @@ const VisaDetails = () => {
           <strong>Fee:</strong> ${fee}
         </p>
         <p>
-          <strong>Validity:</strong> {validity}
+          <strong>Validity:</strong> {validity} 
         </p>
         <p>
           <strong>Application Method:</strong> {applicationMethod}

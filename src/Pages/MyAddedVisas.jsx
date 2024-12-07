@@ -174,7 +174,7 @@ const MyAddedVisas = () => {
       <div className="col-span-1">
         <label className="block text-gray-600">Processing Time (days)</label>
         <input
-          type="number"
+          type="text"
           name="processingTime"
           defaultValue={selectedVisa?.processingTime}
           onChange={(e) =>
@@ -202,7 +202,7 @@ const MyAddedVisas = () => {
 
       {/* Validity */}
       <div className="col-span-1">
-        <label className="block text-gray-600">Validity (months)</label>
+        <label className="block text-gray-600">Validity (days)</label>
         <input
           type="number"
           name="validity"

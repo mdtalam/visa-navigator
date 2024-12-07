@@ -27,8 +27,6 @@ const AddVisa = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Visa Details Submitted: ", formValues);
-
     // send data to server
     fetch("http://localhost:5000/visas", {
       method: "POST",
@@ -39,7 +37,6 @@ const AddVisa = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.insertedId) {
           Swal.fire({
             title: "Success!",
@@ -60,6 +57,10 @@ const AddVisa = () => {
             validity: "",
             applicationMethod: "",
           });
+
+          // Reset all checkboxes
+          const checkboxes = document.querySelectorAll("input[type=checkbox]");
+          checkboxes.forEach((checkbox) => (checkbox.checked = false));
         }
       });
   };
