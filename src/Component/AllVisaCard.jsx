@@ -20,7 +20,7 @@ const AllVisaCard = ({ visa }) => {
   const navigate = useNavigate();
   return (
     <div>
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div className="shadow-2xl rounded-lg overflow-hidden">
         {/* Country Image */}
         <img
           src={countryImage}

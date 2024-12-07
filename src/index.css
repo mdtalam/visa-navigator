@@ -9,6 +9,26 @@ body {
   font-family: "Roboto", serif;
 }
 
+:root {
+  --primary-bg: #ffffff;
+  --primary-text: #000000;
+  --secondary-bg: #f9f9f9;
+  --secondary-text: #333333;
+}
+
+[data-theme="dark"] {
+  --primary-bg: #1a1a1a;
+  --primary-text: #ffffff;
+  --secondary-bg: #333333;
+  --secondary-text: #dddddd;
+}
+
+body {
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
 /* Colors for the Website
 Primary Color: #1E3A8A (Deep Blue)
 Secondary Color: #3B82F6 (Bright Blue)

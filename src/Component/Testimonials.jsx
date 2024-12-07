@@ -26,7 +26,7 @@ const Testimonials = () => {
   ];
 
   return (
-    <div className="py-10 bg-gray-50">
+    <div className="py-10">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-semibold text-center mb-6">
           What Our Users Say
@@ -35,7 +35,7 @@ const Testimonials = () => {
           {reviews.map((review, index) => (
             <div
               key={index}
-              className="bg-white shadow-lg rounded-lg p-6 text-center"
+              className="shadow-lg rounded-lg p-6 text-center"
             >
               <img
                 src={review.image}

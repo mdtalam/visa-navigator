@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
 import { AuthContext } from "../Provider/AuthProvider";
 
-
 const MyVisa = () => {
   const [applications, setApplications] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredApplications, setFilteredApplications] = useState([]);
   const { user } = useContext(AuthContext); // Assuming user info is available from context
   const navigate = useNavigate();
 
@@ -23,6 +24,7 @@ const MyVisa = () => {
       .then((res) => res.json())
       .then((data) => {
         setApplications(data);
+        setFilteredApplications(data); // Initially, all applications are displayed
       })
       .catch((error) => {
         console.error("Error fetching applications:", error);
@@ -36,7 +38,6 @@ const MyVisa = () => {
   }, [user, navigate]);
 
   const handleCancelApplication = (applicationId) => {
-    // Confirm the cancellation
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -46,14 +47,15 @@ const MyVisa = () => {
       cancelButtonText: 'No, keep it',
     }).then((result) => {
       if (result.isConfirmed) {
-        // Send delete request to the backend
         fetch(`http://localhost:5000/application/cancel/${applicationId}`, {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
         })
           .then((res) => res.json())
           .then(() => {
-            setApplications(applications.filter(app => app._id !== applicationId)); // Remove from state
+            const updatedApplications = applications.filter(app => app._id !== applicationId);
+            setApplications(updatedApplications);
+            setFilteredApplications(updatedApplications); // Update filtered list too
             Swal.fire(
               'Cancelled!',
               'Your application has been cancelled.',
@@ -64,15 +66,40 @@ const MyVisa = () => {
     });
   };
 
+  const handleSearch = () => {
+    // Filter applications by country name
+    const results = applications.filter(app =>
+      app.countryName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredApplications(results);
+  };
+
   return (
     <div className="container mx-auto py-10 px-4">
       <h1 className="text-3xl font-bold text-center mb-6">My Visa Applications</h1>
 
-      {applications?.length === 0 ? (
-        <p className="text-center">You have no visa applications.</p>
+      {/* Search Bar */}
+      <div className="flex justify-center mb-6">
+        <input
+          type="text"
+          placeholder="Search by country name"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="border border-gray-300 rounded-l-md px-4 py-2 focus:ring-2 focus:ring-primary focus:outline-none"
+        />
+        <button
+          onClick={handleSearch}
+          className="bg-primary text-white px-4 py-2 rounded-r-md hover:bg-secondary transition"
+        >
+          Search
+        </button>
+      </div>
+
+      {filteredApplications?.length === 0 ? (
+        <p className="text-center">No visa applications found.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {applications.map((application) => (
+          {filteredApplications.map((application) => (
             <div key={application._id} className="border rounded-lg shadow-lg overflow-hidden">
               <img
                 src={application.countryImage}

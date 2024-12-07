@@ -23,7 +23,7 @@ const PopularDestinations = () => {
   ];
 
   return (
-    <div className="py-10 bg-gray-100">
+    <div className="py-10">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-semibold text-center mb-6">
           Popular Destinations
@@ -32,7 +32,7 @@ const PopularDestinations = () => {
           {destinations.map((destination, index) => (
             <div
               key={index}
-              className="bg-white shadow-lg rounded-lg overflow-hidden"
+              className="shadow-lg rounded-lg overflow-hidden"
             >
               <img
                 src={destination.image}

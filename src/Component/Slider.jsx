@@ -12,7 +12,7 @@ import SecureApplicationImg from "../assets/img3.jpg";
 
 const Slider = () => {
   return (
-    <div className="py-6 bg-gray-100">
+    <div className="py-6">
       <div className="container mx-auto px-4">
         <Swiper
           spaceBetween={30}

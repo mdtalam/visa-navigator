@@ -1,6 +1,7 @@
 import {
     createBrowserRouter
 } from "react-router-dom";
+import ErrorPage from "../Component/ErrorPage";
 import Login from "../Component/Login";
 import Register from "../Component/Register";
 import AuthLayOut from "../MainLayOut/AuthLayOut";
@@ -67,6 +68,10 @@ import PrivetRoute from "./PrivetRoute";
                 element: <Register></Register>
             },
         ]
+    },
+    {
+        path: "*",
+        element: <ErrorPage></ErrorPage>
     }
   ]);
 
