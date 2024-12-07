@@ -17,7 +17,7 @@ const MyVisa = () => {
     }
 
     // Fetch the user's visa applications from the backend
-    fetch(`http://localhost:5000/application/${user.email}`, {
+    fetch(`https://visa-navigator-server-theta.vercel.app/application/${user.email}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
@@ -47,7 +47,7 @@ const MyVisa = () => {
       cancelButtonText: 'No, keep it',
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/application/cancel/${applicationId}`, {
+        fetch(`https://visa-navigator-server-theta.vercel.app/application/cancel/${applicationId}`, {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
         })

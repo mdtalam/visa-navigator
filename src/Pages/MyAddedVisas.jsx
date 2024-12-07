@@ -14,7 +14,7 @@ const MyAddedVisas = () => {
   useEffect(() => {
     // Fetch visas added by the logged-in user
     if (user?.email) {
-      fetch(`http://localhost:5000/application/${user?.email}`)
+      fetch(`https://visa-navigator-server-theta.vercel.app/application/${user?.email}`)
         .then((res) => res.json())
         .then((data) => {
           setMyVisas(data);
@@ -39,7 +39,7 @@ const MyAddedVisas = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/application/delete/${id}`, {
+        fetch(`https://visa-navigator-server-theta.vercel.app/application/delete/${id}`, {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
         })
@@ -62,7 +62,7 @@ const MyAddedVisas = () => {
       ...selectedVisa,
       [e.target.name]: e.target.value,
     };
-    fetch(`http://localhost:5000/application/update/${selectedVisa._id}`, {
+    fetch(`https://visa-navigator-server-theta.vercel.app/application/update/${selectedVisa._id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedVisa),

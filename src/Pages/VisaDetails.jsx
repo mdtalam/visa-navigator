@@ -55,7 +55,7 @@ const VisaDetails = () => {
     };
 
     // Save applicationData to the database
-    fetch("http://localhost:5000/application", {
+    fetch("https://visa-navigator-server-theta.vercel.app/application", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(applicationData),

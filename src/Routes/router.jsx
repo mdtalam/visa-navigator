@@ -26,7 +26,7 @@ import PrivetRoute from "./PrivetRoute";
         {
             path:  "/all-visas",
             element: <AllVisas></AllVisas>,
-            loader: () => fetch('http://localhost:5000/visas')
+            loader: () => fetch('https://visa-navigator-server-theta.vercel.app/visas')
         },
         {
             path:  "/add-visa",
@@ -51,7 +51,7 @@ import PrivetRoute from "./PrivetRoute";
             element: <PrivetRoute>
                 <VisaDetails></VisaDetails>
                 </PrivetRoute>,
-            loader: ({params}) => fetch(`http://localhost:5000/visas/${params.id}`)
+            loader: ({params}) => fetch(`https://visa-navigator-server-theta.vercel.app/visas/${params.id}`)
         },
       ]
     },

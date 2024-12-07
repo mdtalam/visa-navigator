@@ -13,7 +13,7 @@ const AllVisas = () => {
   const filteredVisas =
     selectedVisaType === "All"
       ? visas
-      : visas.filter((visa) => visa.visaType === selectedVisaType);
+      : visas?.filter((visa) => visa.visaType === selectedVisaType);
 
   return (
     <div className="container mx-auto">

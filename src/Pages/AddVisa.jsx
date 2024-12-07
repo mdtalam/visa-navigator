@@ -28,11 +28,12 @@ const AddVisa = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // send data to server
-    fetch("http://localhost:5000/visas", {
+    fetch("https://visa-navigator-server-theta.vercel.app/visas", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
+      mode: 'no-cors',
       body: JSON.stringify(formValues),
     })
       .then((res) => res.json())

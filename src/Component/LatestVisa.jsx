@@ -11,7 +11,7 @@ const LatestVisas = () => {
   // Fetch latest visas (last 6 sorted by creation date)
   useEffect(() => {
     const fetchLatestVisas = async () => {
-        const response = await fetch("http://localhost:5000/visas/latest");
+        const response = await fetch("https://visa-navigator-server-theta.vercel.app/visas/latest");
         if (!response.ok) {
           throw new Error("Failed to fetch visas");
         }
