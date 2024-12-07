@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const Register = () => {
     const {createNewUser,setUser,updateUserProfile} = useContext(AuthContext);
-    // const [userError,setUserError] = useState({});
+    const [errorMessage,setErrorMessage] = useState('');
+    const [showSuccess, setShowSuccess] = useState(false);
     const navigate = useNavigate();
 
     const handleRegister = event => {
@@ -14,8 +15,25 @@ const Register = () => {
         const email = form.email.value;
         const photo = form.photo.value;
         const password = form.password.value;
-        const newUser = {name,email,photo,password}
-        console.log(newUser)
+        // const newUser = {name,email,photo,password}
+        // console.log(newUser)
+        setErrorMessage('');
+        setShowSuccess(false);
+
+        // password validation
+        if(password.length < 6){
+          setErrorMessage('Password should be 6 characters or longer');
+          return;
+        }
+
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+        if(!passwordRegex.test(password)){
+        setErrorMessage("Include At least one uppercase letter and lowercase letter")
+        return;
+        }
+
+        // reset error message
+        
 
         createNewUser(email,password)
         .then(result=>{
@@ -26,13 +44,15 @@ const Register = () => {
               navigate('/');
             })
             .catch((error)=>{
-              console.log(error);
+              setErrorMessage(error);
             })
+            setShowSuccess(true);
+            
             
         })
         .catch(error=>{
-            const errorCode= error.code;
-            console.log(errorCode)
+            setErrorMessage(error.code);
+            setShowSuccess(false);
         })
     }
 
@@ -92,7 +112,7 @@ const Register = () => {
 
           {/* Password Field */}
           <div>
-            <label htmlFor="password" className="block text-gray-700 mb-1">
+            <label type="password" className="block text-gray-700 mb-1">
               Password
             </label>
             <input
@@ -103,6 +123,19 @@ const Register = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               required
             />
+            
+            {
+              errorMessage && (
+              <label className="label text-red-500 text-sm">
+                {errorMessage}
+              </label>
+              )}
+              {
+              showSuccess && (
+              <label className="label text-green-500 text-sm">
+                <p>Register successful</p>
+              </label>
+              )}
           </div>
 
           {/* Register Button */}

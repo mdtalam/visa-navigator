@@ -5,7 +5,7 @@ import Loading from "./Loading";
 const LatestVisas = () => {
   const [latestVisas, setLatestVisas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   // Fetch latest visas (last 6 sorted by creation date)
@@ -32,13 +32,13 @@ const LatestVisas = () => {
     );
   }
 
-  if (error) {
-    return (
-      <div className="container mx-auto text-center py-10">
-        <p className="text-red-500">{error}</p>
-      </div>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <div className="container mx-auto text-center py-10">
+  //       <p className="text-red-500">{error}</p>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="container mx-auto py-10 px-4">
@@ -56,7 +56,7 @@ const LatestVisas = () => {
                 className="w-full h-40 object-cover"
               />
               <div className="p-4">
-                <h2 className="text-xl font-bold mb-2">{visa.countryName}</h2>
+                <h2 className="text-xl font-bold mb-2">Country: {visa.countryName}</h2>
                 <p>
                   <strong>Visa Type:</strong> {visa.visaType}
                 </p>
@@ -68,6 +68,9 @@ const LatestVisas = () => {
                 </p>
                 <p>
                   <strong>Validity:</strong> {visa.validity}
+                </p>
+                <p>
+                  <strong>Application method:</strong> {visa.applicationMethod}
                 </p>
                 <button
                   onClick={() => navigate(`/visa-details/${visa._id}`)}
