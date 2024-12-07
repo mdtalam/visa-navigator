@@ -1,9 +1,10 @@
 import React, { useContext, useState } from "react";
+import { FcGoogle } from "react-icons/fc";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const Login = () => {
-    const {userLogin,setUser} = useContext(AuthContext);
+    const {userLogin,setUser,googleLogin} = useContext(AuthContext);
     const [userError, setUserError] = useState({})
     const location = useLocation();
     const navigate = useNavigate();
@@ -30,10 +31,20 @@ const Login = () => {
    
   };
 
-//   const handleForgetPassword = () => {
-//     // Handle forget password logic here
-//     alert("Redirecting to forget password page...");
-//   };
+  // google login
+  const handleGoogleLogin = () => {
+    googleLogin()
+    .then(result=>{
+      const user = result.user;
+      setUser(user)
+      navigate(location?.state ? location.state : "/");
+    })
+    .catch(error=>{
+      setUserError({...userError, login: error.code})
+    })
+  }
+
+
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -107,6 +118,15 @@ const Login = () => {
           <span className="mx-2 text-gray-500">or</span>
           <div className="border-t w-full"></div>
         </div>
+
+           {/* Google Login Button */}
+        <button
+          onClick={handleGoogleLogin}
+          className="w-full flex items-center justify-center bg-gray-100 border border-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-200 transition"
+        >
+          <FcGoogle className="mr-2" size={20} /> {/* Google Icon */}
+          Continue with Google
+        </button>
 
         {/* Register Link */}
         <div className="text-center">

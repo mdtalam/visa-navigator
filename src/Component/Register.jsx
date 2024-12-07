@@ -1,9 +1,10 @@
 import React, { useContext, useState } from "react";
+import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const Register = () => {
-    const {createNewUser,setUser,updateUserProfile} = useContext(AuthContext);
+    const {createNewUser,setUser,googleLogin,updateUserProfile} = useContext(AuthContext);
     const [errorMessage,setErrorMessage] = useState('');
     const [showSuccess, setShowSuccess] = useState(false);
     const navigate = useNavigate();
@@ -54,6 +55,18 @@ const Register = () => {
             setErrorMessage(error.code);
             setShowSuccess(false);
         })
+    }
+
+    const handleGoogleRegister = () => {
+      googleLogin()
+      .then(result=>{
+        const user = result.user;
+        setUser(user)
+        navigate('/');
+      })
+      .catch(error=>{
+        setUserError({...userError, login: error.code})
+      })
     }
 
   return (
@@ -155,6 +168,15 @@ const Register = () => {
           <span className="mx-2 text-gray-500">or</span>
           <div className="border-t w-full"></div>
         </div>
+
+        {/* Google Login Button */}
+        <button
+          onClick={handleGoogleRegister}
+          className="w-full flex items-center justify-center bg-gray-100 border border-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-200 transition"
+        >
+          <FcGoogle className="mr-2" size={20} /> {/* Google Icon */}
+          Continue with Google
+        </button>
 
         {/* Login Link */}
         <div className="text-center">
