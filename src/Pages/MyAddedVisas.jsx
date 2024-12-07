@@ -46,7 +46,6 @@ const MyAddedVisas = () => {
           .then((res) => res.json())
           .then((data) => {
             setMyVisas(myVisas.filter((visa) => visa._id !== id));
-            console.log(data)
             if (data.deletedCount > 0) {             
               Swal.fire("Deleted!", "The visa has been deleted.", "success");
             }
@@ -70,7 +69,6 @@ const MyAddedVisas = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
         if (data.modifiedCount>0) {
           setMyVisas(
             myVisas.map((visa) =>
