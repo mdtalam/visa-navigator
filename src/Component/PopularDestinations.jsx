@@ -2,25 +2,41 @@ import React from "react";
 import { Slide } from "react-awesome-reveal";
 
 const PopularDestinations = () => {
+
   const destinations = [
     {
       country: "Japan",
-      image: "https://via.placeholder.com/300", // Replace with actual image URL
+      image: "https://i.ibb.co.com/rskccqQ/Japan.jpg", // Replace with actual image URL
       description:
         "Experience the vibrant culture, stunning landscapes, and world-class cuisine of Japan.",
     },
     {
       country: "Italy",
-      image: "https://via.placeholder.com/300",
+      image: "https://i.ibb.co.com/4TCtWL6/Italy.jpg",
       description:
         "Discover the rich history, art, and delicious food in one of Europe's most iconic destinations.",
     },
     {
       country: "Maldives",
-      image: "https://via.placeholder.com/300",
+      image: "https://i.ibb.co.com/3RRZqRj/Maldives.jpg",
       description:
         "Relax in paradise with pristine beaches, clear waters, and luxury resorts.",
     },
+    {
+      "country": "Australia",
+      "image": "https://i.ibb.co.com/s971dSf/Australia.jpg",
+      "description": "Explore the stunning Outback, vibrant cities, and iconic landmarks like the Sydney Opera House."
+    },
+    {
+      "country": "Brazil",
+      "image": "https://i.ibb.co.com/mhCH0KN/Brazil.jpg",
+      "description": "Immerse yourself in Brazil's lively culture, breathtaking rainforests, and the famous Carnival festival."
+    },
+    {
+      "country": "Switzerland",
+      "image": "https://i.ibb.co.com/5BkT4LS/Switzerland.jpg",
+      "description": "Enjoy the majestic Alps, serene lakes, and picturesque villages in Switzerland."
+    }
   ];
 
   return (
@@ -40,7 +56,7 @@ const PopularDestinations = () => {
               <img
                 src={destination.image}
                 alt={destination.country}
-                className="h-40 w-full object-cover"
+                className="h-56 w-full object-cover"
               />
               <div className="p-4">
                 <h3 className="text-xl font-bold mb-2">{destination.country}</h3>

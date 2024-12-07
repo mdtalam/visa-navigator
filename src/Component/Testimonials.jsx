@@ -8,21 +8,21 @@ const Testimonials = () => {
       country: "USA",
       feedback:
         "Visa Navigator made the entire visa process stress-free. The interface was user-friendly, and the team was always helpful!",
-      image: "https://via.placeholder.com/100", // Replace with user's image URL
+      image: "https://i.ibb.co.com/mSYygKL/testi-img1.jpg", // Replace with user's image URL
     },
     {
       name: "Emma Smith",
       country: "UK",
       feedback:
         "Fast and reliable service! I got my tourist visa in just 5 days. Highly recommended.",
-      image: "https://via.placeholder.com/100",
+      image: "https://i.ibb.co.com/x3tDNzf/testi-img2.jpg",
     },
     {
       name: "Ali Khan",
       country: "UAE",
       feedback:
         "The best platform for visa applications! The support team answered all my questions promptly.",
-      image: "https://via.placeholder.com/100",
+      image: "https://i.ibb.co.com/6tbdwCH/testi-img3.jpg",
     },
   ];
 

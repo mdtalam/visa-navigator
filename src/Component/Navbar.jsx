@@ -15,8 +15,6 @@ const Navbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // For modal
   const [newDisplayName, setNewDisplayName] = useState(user?.displayName || "");
   const [newPhotoURL, setNewPhotoURL] = useState(user?.photoURL || "");
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
 
   //
   const [theme, setTheme] = useState("light");
@@ -337,7 +335,7 @@ const Navbar = () => {
                     <img
                       src={user?.photoURL}
                       alt="User"
-                      className="w-10 h-10 rounded-full cursor-pointer"
+                      className="w-10 h-10 rounded-full cursor-pointer mb-4 mx-auto"
                       data-tooltip-id="profileTooltip"
                       data-tooltip-content={user?.displayName || "User Profile"}
                       
@@ -351,7 +349,7 @@ const Navbar = () => {
                     />
                   <button
                     onClick={() => setIsModalOpen(true)}
-                    className="bg-secondary px-4 py-2 rounded block md:hidden lg:hidden hover:bg-accent transition"
+                    className="bg-accent px-4 py-2 rounded block md:hidden lg:hidden hover:bg-accent transition"
                   >
                     Update Profile
                   </button>
@@ -367,7 +365,7 @@ const Navbar = () => {
               )}
               <button
                 onClick={toggleTheme}
-                className="text-xl bg-primary text-white px-4 py-2 rounded transition flex items-center"
+                className="text-xl bg-primary text-white px-4 py-2 rounded transition flex items-center mx-auto"
               >
                 {theme === "light" ? <FaMoon /> : <FaSun />}
                 <span className="ml-2">

@@ -3,7 +3,7 @@ import { FaFacebook, FaInstagram, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-primary text-white py-6">
+    <footer className="bg-primary text-white py-12">
       <div className="container mx-auto px-4">
         {/* Footer Content */}
         <div className="flex flex-col md:flex-row justify-between items-center">
@@ -14,22 +14,22 @@ const Footer = () => {
 
           {/* Contact Information */}
           <div className="text-center md:text-left mb-4 md:mb-0">
-            <p>Email: <a href="mailto:contact@visanavigator.com" className="hover:text-secondary">contact@visanavigator.com</a></p>
-            <p>Phone: <a href="tel:+1234567890" className="hover:text-secondary">+1 (234) 567-890</a></p>
+            <p>Email: <a href="mailto:contact@visanavigator.com" className="hover:text-secondary">rafsantasnimrafsan@gmail.com</a></p>
+            <p>Phone: <a href="tel:+1234567890" className="hover:text-secondary">+8801911424195</a></p>
           </div>
 
           {/* Social Media Links */}
           <div className="flex space-x-4">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-secondary">
+            <a href="https://www.facebook.com/rafsan.tasnim/" target="_blank" rel="noopener noreferrer" className="hover:text-secondary">
               <FaFacebook size={24} />
             </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-secondary">
+            <a href="https://x.com/mdtalambd" target="_blank" rel="noopener noreferrer" className="hover:text-secondary">
               <FaTwitter size={24} />
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-secondary">
+            <a href="https://www.linkedin.com/in/mdtalambd/" target="_blank" rel="noopener noreferrer" className="hover:text-secondary">
               <FaLinkedin size={24} />
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-secondary">
+            <a href="https://www.instagram.com/rafsantasnim/" target="_blank" rel="noopener noreferrer" className="hover:text-secondary">
               <FaInstagram size={24} />
             </a>
           </div>
