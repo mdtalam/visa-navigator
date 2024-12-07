@@ -5,7 +5,6 @@ import Loading from "./Loading";
 const LatestVisas = () => {
   const [latestVisas, setLatestVisas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  // const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   // Fetch latest visas (last 6 sorted by creation date)
@@ -32,13 +31,7 @@ const LatestVisas = () => {
     );
   }
 
-  // if (error) {
-  //   return (
-  //     <div className="container mx-auto text-center py-10">
-  //       <p className="text-red-500">{error}</p>
-  //     </div>
-  //   );
-  // }
+
 
   return (
     <div className="container mx-auto py-10 px-4">

@@ -80,7 +80,7 @@ const MyVisa = () => {
                 className="w-full h-40 object-cover"
               />
               <div className="p-4">
-                <h2 className="text-xl font-bold mb-2">{application.countryName}</h2>
+                <h2 className="text-xl font-bold mb-2">Country: {application.countryName}</h2>
                 <p><strong>Visa Type:</strong> {application.visaType}</p>
                 <p><strong>Processing Time:</strong> {application.processingTime} days</p>
                 <p><strong>Fee:</strong> ${application.fee}</p>

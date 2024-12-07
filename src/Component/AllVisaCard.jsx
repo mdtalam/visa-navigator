@@ -29,7 +29,7 @@ const AllVisaCard = ({ visa }) => {
         />
         <div className="p-4">
           {/* Country Name */}
-          <h3 className="text-xl font-semibold mb-2">{countryName}</h3>
+          <h3 className="text-xl font-semibold mb-2">Country: {countryName}</h3>
 
           {/* Visa Type */}
           <p className="text-gray-600">

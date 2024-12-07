@@ -168,7 +168,7 @@ const VisaDetails = () => {
                 type="date"
                 name="appliedDate"
                 value={
-                  formData.appliedDate || new Date().toISOString().split("T")[0]
+                  formData.appliedDate
                 } // Default to today's date
                 onChange={handleChange} // Update the formData state on change
                 className="w-full px-3 py-2 border rounded"

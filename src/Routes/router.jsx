@@ -24,9 +24,7 @@ import PrivetRoute from "./PrivetRoute";
         },
         {
             path:  "/all-visas",
-            element: <PrivetRoute>
-                <AllVisas></AllVisas>
-            </PrivetRoute>,
+            element: <AllVisas></AllVisas>,
             loader: () => fetch('http://localhost:5000/visas')
         },
         {
