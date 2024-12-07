@@ -4,6 +4,7 @@ import { FiMenu, FiX } from "react-icons/fi"; // Importing react-icons for hambu
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, logOutUser } = useContext(AuthContext);
