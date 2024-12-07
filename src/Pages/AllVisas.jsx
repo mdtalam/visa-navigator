@@ -35,7 +35,7 @@ const AllVisas = () => {
       </div>
 
       {/* Visa Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4 mb-8">
         {filteredVisas.map((visa) => (
           <AllVisaCard key={visa._id} visa={visa}></AllVisaCard>
         ))}

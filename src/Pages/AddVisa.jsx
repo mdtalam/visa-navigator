@@ -47,12 +47,25 @@ const AddVisa = () => {
             icon: "success",
             confirmButtonText: "Close",
           });
+
+          setFormValues({
+            countryImage: "",
+            countryName: "",
+            visaType: "Tourist visa",
+            processingTime: "",
+            requiredDocuments: [],
+            description: "",
+            ageRestriction: "",
+            fee: "",
+            validity: "",
+            applicationMethod: "",
+          });
         }
       });
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center mt-10 mb-10 px-4">
       <div className="container mx-auto p-8 rounded-lg shadow-2xl max-w-4xl">
         <h2 className="text-3xl font-bold text-center mb-8">Add Visa</h2>
         <form onSubmit={handleSubmit}>
@@ -151,6 +164,8 @@ const AddVisa = () => {
                   "Valid passport",
                   "Visa application form",
                   "Recent passport-sized photograph",
+                  "Travel itinerary",
+                  "Proof of financial means",
                 ].map((doc) => (
                   <label key={doc} className="flex items-center space-x-2">
                     <input

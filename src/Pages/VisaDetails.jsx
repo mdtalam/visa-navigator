@@ -105,7 +105,7 @@ const VisaDetails = () => {
           <strong>Required Documents:</strong> {requiredDocuments.join(", ")}
         </p>
         <p>
-          <strong>Age Restriction:</strong> {ageRestriction}+
+          <strong>Age Restriction:</strong> {ageRestriction || "None"}
         </p>
         <p>
           <strong>Fee:</strong> ${fee}

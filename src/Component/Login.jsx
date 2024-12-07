@@ -6,6 +6,7 @@ import { AuthContext } from "../Provider/AuthProvider";
 const Login = () => {
     const {userLogin,setUser,googleLogin} = useContext(AuthContext);
     const [userError, setUserError] = useState({})
+    const [success,setSuccess] = useState("");
     const location = useLocation();
     const navigate = useNavigate();
     
@@ -23,6 +24,7 @@ const Login = () => {
     .then(result=>{
         const user = result.user;
         setUser(user);
+        setSuccess('Login Successful')
         navigate(location?.state ? location.state : "/");
     })
     .catch(error=>{
@@ -37,6 +39,7 @@ const Login = () => {
     .then(result=>{
       const user = result.user;
       setUser(user)
+      setSuccess('Login Successful')
       navigate(location?.state ? location.state : "/");
     })
     .catch(error=>{
@@ -47,7 +50,7 @@ const Login = () => {
 
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center mx-4">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-sm w-full">
         {/* Title */}
         <h2 className="text-3xl font-bold text-center text-primary mb-6">
@@ -88,6 +91,11 @@ const Login = () => {
           {
             userError.login && <label type="password" className="block text-red-600 mb-1">
             {userError.login}
+          </label>
+          }
+          {
+            success && <label type="password" className="block text-green-600 mb-1">
+            {success}
           </label>
           }
 
