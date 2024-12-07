@@ -1,4 +1,5 @@
 import React from "react";
+import { Slide } from "react-awesome-reveal";
 
 const PopularDestinations = () => {
   const destinations = [
@@ -25,9 +26,11 @@ const PopularDestinations = () => {
   return (
     <div className="py-10">
       <div className="container mx-auto px-4">
+      <Slide triggerOnce direction="down">
         <h2 className="text-3xl font-semibold text-center mb-6">
           Popular Destinations
         </h2>
+      </Slide>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {destinations.map((destination, index) => (
             <div

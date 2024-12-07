@@ -1,3 +1,4 @@
+import { Slide } from "react-awesome-reveal";
 
 
 const Testimonials = () => {
@@ -28,9 +29,11 @@ const Testimonials = () => {
   return (
     <div className="py-10">
       <div className="container mx-auto px-4">
+        <Slide triggerOnce direction="right">
         <h2 className="text-3xl font-semibold text-center mb-6">
           What Our Users Say
         </h2>
+        </Slide>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {reviews.map((review, index) => (
             <div
