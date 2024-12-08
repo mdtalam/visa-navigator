@@ -161,7 +161,7 @@ const MyAddedVisas = () => {
         <Modal onClose={() => setIsModalOpen(false)} title="Update Visa">
           <form
             onSubmit={handleUpdate}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            className="space-y-4"
           >
             {/* Country Name */}
             <div className="col-span-1">

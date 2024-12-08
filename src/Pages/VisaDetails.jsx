@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
-import ModalApply from "../Component/ModalApply";
+import Modal from "../Component/Modal";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const VisaDetails = () => {
@@ -85,7 +85,7 @@ const VisaDetails = () => {
   };
 
   return (
-    <div className="container mx-auto py-10 px-4 w-2/3 mb-10">
+    <div className="container mx-auto py-10 px-4 md:w-2/3 mb-10">
       <h1 className="text-3xl text-center font-bold mb-6">Visa Details</h1>
       <h1 className="text-2xl font-bold mb-4">Country Name: {countryName}</h1>
       <img
@@ -130,7 +130,7 @@ const VisaDetails = () => {
 
       {/* Application Modal */}
       {isModalOpen && (
-        <ModalApply onClose={() => setIsModalOpen(false)} title="Apply for Visa">
+        <Modal onClose={() => setIsModalOpen(false)} title="Apply for Visa">
           <form onSubmit={handleApply} className="space-y-4">
             <div>
               <label className="block text-gray-600">Email</label>
@@ -190,7 +190,7 @@ const VisaDetails = () => {
               Apply
             </button>
           </form>
-        </ModalApply>
+        </Modal>
       )}
     </div>
   );
