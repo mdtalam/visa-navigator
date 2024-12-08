@@ -29,7 +29,6 @@ const AddVisa = () => {
     e.preventDefault();
     // send data to server
     fetch("https://visa-navigator-server-theta.vercel.app/visas", {
-      mode: 'no-cors',
       method: "POST",
       headers: {
         "content-type": "application/json",
