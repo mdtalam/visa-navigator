@@ -104,7 +104,7 @@ const MyVisa = () => {
               <img
                 src={application.countryImage}
                 alt={application.countryName}
-                className="w-full h-40 object-cover"
+                className="w-full h-56 object-cover"
               />
               <div className="p-4">
                 <h2 className="text-xl font-bold mb-2">Country: {application.countryName}</h2>

@@ -25,7 +25,7 @@ const AllVisaCard = ({ visa }) => {
         <img
           src={countryImage}
           alt={countryName}
-          className="w-full h-40 object-cover"
+          className="w-full h-48 object-cover"
         />
         <div className="p-4">
           {/* Country Name */}
