@@ -64,6 +64,7 @@ const MyAddedVisas = () => {
     };
     fetch(`https://visa-navigator-server-theta.vercel.app/application/update/${selectedVisa._id}`, {
       method: "PUT",
+      mode: 'no-cors',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedVisa),
     })

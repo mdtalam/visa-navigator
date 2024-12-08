@@ -70,8 +70,8 @@ const Register = () => {
     }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center mb-10 mt-10 mx-4">
-      <div className="bg-white shadow-lg rounded-lg p-8 max-w-sm w-full">
+    <div className="min-h-screen flex items-center justify-center mb-10 mt-10 mx-4">
+      <div className="shadow-2xl rounded-lg p-8 max-w-sm w-full">
         {/* Title */}
         <h2 className="text-3xl font-bold text-center text-primary mb-6">
           Create an Account
