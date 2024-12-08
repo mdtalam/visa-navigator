@@ -28,10 +28,3 @@ body {
   color: var(--primary-text);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
-
-/* Colors for the Website
-Primary Color: #1E3A8A (Deep Blue)
-Secondary Color: #3B82F6 (Bright Blue)
-Accent Color: #F59E0B (Golden Yellow)
-Background Color: #F3F4F6 (Light Gray)
-Text Color: #111827 (Dark Gray/Black) */

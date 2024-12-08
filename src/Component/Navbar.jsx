@@ -7,6 +7,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Provider/AuthProvider";
 
+
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, logOutUser, updateUserProfile, setUser } =
