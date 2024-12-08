@@ -22,9 +22,18 @@ const VisaDetails = () => {
   } = loadedData;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({});
+  
   const { user } = useContext(AuthContext);
-  // const navigate = useNavigate();
+
+  // Utility function to get current date in YYYY-MM-DD format
+  const getCurrentDate = () => {
+    const today = new Date();
+    return today.toISOString().split("T")[0];
+  };
+
+  const [formData, setFormData] = useState({
+    appliedDate: getCurrentDate(), // Set default applied date to today
+  });
 
   // Handle form changes
   const handleChange = (e) => {
@@ -71,7 +80,6 @@ const VisaDetails = () => {
             confirmButtonText: "Close",
           });
         }
-        // navigate("/my-visa-applications");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -110,7 +118,7 @@ const VisaDetails = () => {
           <strong>Fee:</strong> ${fee}
         </p>
         <p>
-          <strong>Validity:</strong> {validity} 
+          <strong>Validity:</strong> {validity}
         </p>
         <p>
           <strong>Application Method:</strong> {applicationMethod}
@@ -166,9 +174,7 @@ const VisaDetails = () => {
               <input
                 type="date"
                 name="appliedDate"
-                value={
-                  formData.appliedDate
-                } // Default to today's date
+                value={formData.appliedDate} // Set to current date by default
                 onChange={handleChange} // Update the formData state on change
                 className="w-full px-3 py-2 border rounded"
                 required
