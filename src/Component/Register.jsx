@@ -4,80 +4,71 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const Register = () => {
-    const {createNewUser,setUser,googleLogin,updateUserProfile} = useContext(AuthContext);
-    const [errorMessage,setErrorMessage] = useState('');
-    const [showSuccess, setShowSuccess] = useState(false);
-    const navigate = useNavigate();
+  const { createNewUser, setUser, googleLogin, updateUserProfile } = useContext(AuthContext);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // Added state for password visibility
+  const navigate = useNavigate();
 
-    const handleRegister = event => {
-        event.preventDefault();
-        const form = event.target;
-        const name = form.name.value;
-        const email = form.email.value;
-        const photo = form.photo.value;
-        const password = form.password.value;
-        // const newUser = {name,email,photo,password}
-        // console.log(newUser)
-        setErrorMessage('');
-        setShowSuccess(false);
+  const handleRegister = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const photo = form.photo.value;
+    const password = form.password.value;
 
-        // password validation
-        if(password.length < 6){
-          setErrorMessage('Password should be 6 characters or longer');
-          return;
-        }
+    setErrorMessage("");
+    setShowSuccess(false);
 
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-        if(!passwordRegex.test(password)){
-        setErrorMessage("Include At least one uppercase letter and lowercase letter")
-        return;
-        }
-
-        // reset error message
-        
-
-        createNewUser(email,password)
-        .then(result=>{
-            const user = result.user;
-            setUser(user)
-            updateUserProfile({displayName:name,photoURL:photo})
-            .then(()=>{
-              navigate('/');
-            })
-            .catch((error)=>{
-              setErrorMessage(error);
-            })
-            setShowSuccess(true);
-            
-            
-        })
-        .catch(error=>{
-            setErrorMessage(error.code);
-            setShowSuccess(false);
-        })
+    // Password validation
+    if (password.length < 6) {
+      setErrorMessage("Password should be 6 characters or longer");
+      return;
     }
 
-    const handleGoogleRegister = () => {
-      googleLogin()
-      .then(result=>{
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+    if (!passwordRegex.test(password)) {
+      setErrorMessage("Include at least one uppercase letter and lowercase letter");
+      return;
+    }
+
+    createNewUser(email, password)
+      .then((result) => {
         const user = result.user;
-        setUser(user)
-        navigate('/');
+        setUser(user);
+        updateUserProfile({ displayName: name, photoURL: photo })
+          .then(() => {
+            navigate("/");
+          })
+          .catch((error) => {
+            setErrorMessage(error.message);
+          });
+        setShowSuccess(true);
       })
-      .catch(error=>{
-        setUserError({...userError, login: error.code})
+      .catch((error) => {
+        setErrorMessage(error.code);
+        setShowSuccess(false);
+      });
+  };
+
+  const handleGoogleRegister = () => {
+    googleLogin()
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+        navigate("/");
       })
-    }
+      .catch((error) => {
+        setErrorMessage(error.code);
+      });
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center mb-10 mt-10 mx-4">
       <div className="shadow-2xl rounded-lg p-8 max-w-sm w-full">
-        {/* Title */}
-        <h2 className="text-3xl font-bold text-center text-primary mb-6">
-          Create an Account
-        </h2>
+        <h2 className="text-3xl font-bold text-center text-primary mb-6">Create an Account</h2>
 
-        {/* Form */}
         <form onSubmit={handleRegister} className="space-y-4">
           {/* Name Field */}
           <div>
@@ -87,7 +78,7 @@ const Register = () => {
             <input
               name="name"
               type="text"
-              id="name"             
+              id="name"
               placeholder="Enter your name"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               required
@@ -102,7 +93,7 @@ const Register = () => {
             <input
               name="email"
               type="email"
-              id="email"  
+              id="email"
               placeholder="Enter your email"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               required
@@ -125,30 +116,34 @@ const Register = () => {
 
           {/* Password Field */}
           <div>
-            <label type="password" className="block text-gray-700 mb-1">
+            <label htmlFor="password" className="block text-gray-700 mb-1">
               Password
             </label>
-            <input
-              name="password"
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-              required
-            />
-            
-            {
-              errorMessage && (
-              <label className="label text-red-500 text-sm">
-                {errorMessage}
-              </label>
-              )}
-              {
-              showSuccess && (
+            <div className="relative">
+              <input
+                name="password"
+                type={showPassword ? "text" : "password"}
+                id="password"
+                placeholder="Enter your password"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-2 flex items-center text-sm text-gray-500 hover:text-primary"
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
+            {errorMessage && (
+              <label className="label text-red-500 text-sm">{errorMessage}</label>
+            )}
+            {showSuccess && (
               <label className="label text-green-500 text-sm">
                 <p>Register successful</p>
               </label>
-              )}
+            )}
           </div>
 
           {/* Register Button */}
@@ -174,7 +169,7 @@ const Register = () => {
           onClick={handleGoogleRegister}
           className="w-full flex items-center justify-center bg-gray-100 border border-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-200 transition"
         >
-          <FcGoogle className="mr-2" size={20} /> {/* Google Icon */}
+          <FcGoogle className="mr-2" size={20} />
           Continue with Google
         </button>
 

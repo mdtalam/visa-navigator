@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
-import Modal from "../Component/Modal";
+import ModalApply from "../Component/ModalApply";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const VisaDetails = () => {
@@ -130,7 +130,7 @@ const VisaDetails = () => {
 
       {/* Application Modal */}
       {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)} title="Apply for Visa">
+        <ModalApply onClose={() => setIsModalOpen(false)} title="Apply for Visa">
           <form onSubmit={handleApply} className="space-y-4">
             <div>
               <label className="block text-gray-600">Email</label>
@@ -190,7 +190,7 @@ const VisaDetails = () => {
               Apply
             </button>
           </form>
-        </Modal>
+        </ModalApply>
       )}
     </div>
   );

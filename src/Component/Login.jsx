@@ -4,64 +4,53 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 
 const Login = () => {
-    const {userLogin,setUser,googleLogin} = useContext(AuthContext);
-    const [userError, setUserError] = useState({})
-    const [success,setSuccess] = useState("");
-    const location = useLocation();
-    const navigate = useNavigate();
-    
+  const { userLogin, setUser, googleLogin } = useContext(AuthContext);
+  const [userError, setUserError] = useState({});
+  const [success, setSuccess] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // Added state for password visibility
+  const location = useLocation();
+  const navigate = useNavigate();
 
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-
-  const handleLogin = event => {
+  const handleLogin = (event) => {
     event.preventDefault();
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
-    const loginUser = {email,password}
-    userLogin(email,password)
-    .then(result=>{
+    userLogin(email, password)
+      .then((result) => {
         const user = result.user;
         setUser(user);
-        setSuccess('Login Successful')
+        setSuccess("Login Successful");
         navigate(location?.state ? location.state : "/");
-    })
-    .catch(error=>{
-        setUserError({...userError, login: error.code})
-    })
-   
+      })
+      .catch((error) => {
+        setUserError({ ...userError, login: error.code });
+      });
   };
 
-  // google login
   const handleGoogleLogin = () => {
     googleLogin()
-    .then(result=>{
-      const user = result.user;
-      setUser(user)
-      setSuccess('Login Successful')
-      navigate(location?.state ? location.state : "/");
-    })
-    .catch(error=>{
-      setUserError({...userError, login: error.code})
-    })
-  }
-
-
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+        setSuccess("Login Successful");
+        navigate(location?.state ? location.state : "/");
+      })
+      .catch((error) => {
+        setUserError({ ...userError, login: error.code });
+      });
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center mx-4">
       <div className="shadow-2xl rounded-lg p-8 max-w-sm w-full">
-        {/* Title */}
         <h2 className="text-3xl font-bold text-center text-primary mb-6">
           Login to Your Account
         </h2>
-
-        {/* Form */}
         <form onSubmit={handleLogin} className="space-y-4">
           {/* Email Field */}
           <div>
-            <label type="email" className="block text-gray-700 mb-1">
+            <label htmlFor="email" className="block text-gray-700 mb-1">
               Email Address
             </label>
             <input
@@ -76,30 +65,37 @@ const Login = () => {
 
           {/* Password Field */}
           <div>
-            <label type="password" className="block text-gray-700 mb-1">
+            <label htmlFor="password" className="block text-gray-700 mb-1">
               Password
             </label>
-            <input
-            name="password"
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-              required
-            />
+            <div className="relative">
+              <input
+                name="password"
+                type={showPassword ? "text" : "password"}
+                id="password"
+                placeholder="Enter your password"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-2 flex items-center text-sm text-gray-500 hover:text-primary"
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
           </div>
-          {
-            userError.login && <label type="password" className="block text-red-600 mb-1">
-            {userError.login}
-          </label>
-          }
-          {
-            success && <label type="password" className="block text-green-600 mb-1">
-            {success}
-          </label>
-          }
 
-          {/* Forget Password Link */}
+          {/* Error and Success Messages */}
+          {userError.login && (
+            <p className="text-red-600 text-sm">{userError.login}</p>
+          )}
+          {success && (
+            <p className="text-green-600 text-sm">{success}</p>
+          )}
+
+          {/* Forgot Password Link */}
           <div className="text-right">
             <button
               type="button"
@@ -120,19 +116,18 @@ const Login = () => {
           </div>
         </form>
 
-        {/* Divider */}
         <div className="flex items-center justify-between my-4">
           <div className="border-t w-full"></div>
           <span className="mx-2 text-gray-500">or</span>
           <div className="border-t w-full"></div>
         </div>
 
-           {/* Google Login Button */}
+        {/* Google Login Button */}
         <button
           onClick={handleGoogleLogin}
           className="w-full flex items-center justify-center bg-gray-100 border border-gray-300 text-gray-700 py-2 rounded-lg hover:bg-gray-200 transition"
         >
-          <FcGoogle className="mr-2" size={20} /> {/* Google Icon */}
+          <FcGoogle className="mr-2" size={20} />
           Continue with Google
         </button>
 
