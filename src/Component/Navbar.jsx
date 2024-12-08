@@ -204,7 +204,7 @@ const Navbar = () => {
                   <input
                     type="text"
                     id="displayName"
-                    value={newDisplayName}
+                    Value={newDisplayName}
                     onChange={(e) => setNewDisplayName(e.target.value)}
                     className="w-full border rounded px-3 py-2"
                   />
