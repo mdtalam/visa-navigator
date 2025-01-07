@@ -4,12 +4,11 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-
-
 // Import local images
 import FastProcessingImg from "../assets/img1.jpg";
 import GlobalReachImg from "../assets/img2.jpg";
 import SecureApplicationImg from "../assets/img3.jpg";
+
 
 const Slider = () => {
   return (
