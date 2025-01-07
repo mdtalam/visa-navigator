@@ -1,4 +1,5 @@
 import React from 'react';
+import Blog from '../Component/Blog';
 import LatestVisa from '../Component/LatestVisa';
 import PopularDestinations from '../Component/PopularDestinations';
 import Slider from '../Component/Slider';
@@ -16,6 +17,9 @@ const Home = () => {
             </section>
             <section>
                 <Testimonials></Testimonials>
+            </section>
+            <section>
+                <Blog></Blog>
             </section>
             <section>
                 <PopularDestinations></PopularDestinations>
