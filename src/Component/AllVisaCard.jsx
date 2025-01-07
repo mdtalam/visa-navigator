@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const AllVisaCard = ({ visa }) => {
   const {
@@ -8,52 +8,47 @@ const AllVisaCard = ({ visa }) => {
     countryName,
     visaType,
     processingTime,
-    requiredDocuments,
-    description,
-    ageRestriction,
     fee,
-    validity,
     applicationMethod,
   } = visa;
-  
-  
-  const navigate = useNavigate();
+
   return (
-    <div>
-      <div className="shadow-2xl rounded-lg overflow-hidden">
-        {/* Country Image */}
+    <div className="shadow-2xl rounded-lg overflow-hidden flex flex-col h-full">
+      {/* Country Image */}
+      <div className="flex-shrink-0">
         <img
           src={countryImage}
           alt={countryName}
           className="w-full h-48 object-cover"
         />
-        <div className="p-4">
-          {/* Country Name */}
-          <h3 className="text-xl font-semibold mb-2">Country: {countryName}</h3>
+      </div>
 
-          {/* Visa Type */}
-          <p className="text-gray-600">
-            <strong>Visa Type:</strong> {visaType}
-          </p>
+      {/* Card Info */}
+      <div className="flex-grow p-4">
+        {/* Country Name */}
+        <h3 className="text-xl font-semibold mb-2">{countryName}</h3>
 
-          {/* Processing Time */}
-          <p className="text-gray-600">
-            <strong>Processing Time:</strong> {processingTime} days
-          </p>
+        {/* Visa Type */}
+        <p>{visaType}</p>
 
-          {/* Fee */}
-          <p className="text-gray-600">
-            <strong>Fee:</strong> ${fee}
-          </p>
+        {/* Processing Time */}
+        <p>{processingTime} days</p>
 
-          {/* "See Details" Button */}
-          <Link
-            className="btn mt-4 px-4 py-2 bg-primary text-white rounded hover:bg-secondary transition w-full"
-            to={`/visa-details/${visa._id}`}
-          >
-            See Details
-          </Link>
-        </div>
+        {/* Processing Time */}
+        <p>{applicationMethod} days</p>
+
+        {/* Fee */}
+        <p>${fee}</p>
+      </div>
+
+      {/* Button */}
+      <div className="p-4">
+        <Link
+          className="btn mt-4 px-4 py-2 bg-primary text-white rounded hover:bg-secondary transition w-full"
+          to={`/visa-details/${_id}`}
+        >
+          See Details
+        </Link>
       </div>
     </div>
   );

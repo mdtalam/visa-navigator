@@ -13,8 +13,8 @@ import SecureApplicationImg from "../assets/img3.jpg";
 
 const Slider = () => {
   return (
-    <div className="py-6">
-      <div className="container mx-auto px-4">
+    <div>
+      <div className="container mx-auto">
         <Swiper
           spaceBetween={30}
           centeredSlides={true}
@@ -32,7 +32,7 @@ const Slider = () => {
           {/* Slide 1 */}
           <SwiperSlide>
             <div
-              className="relative h-[500px] flex items-center justify-center text-center text-white rounded-lg shadow-lg"
+              className="relative h-[370px] flex items-center justify-center text-center text-white rounded-lg shadow-lg"
               style={{
                 backgroundImage: `url(${FastProcessingImg})`,
                 backgroundSize: "cover",
@@ -54,7 +54,7 @@ const Slider = () => {
           {/* Slide 2 */}
           <SwiperSlide>
             <div
-              className="relative h-[500px] flex items-center justify-center text-center text-white rounded-lg shadow-lg"
+              className="relative h-[370px] flex items-center justify-center text-center text-white rounded-lg shadow-lg"
               style={{
                 backgroundImage: `url(${SecureApplicationImg})`,
                 backgroundSize: "cover",
@@ -78,7 +78,7 @@ const Slider = () => {
           {/* Slide 3 */}
           <SwiperSlide>
             <div
-              className="relative h-[500px] flex items-center justify-center text-center text-white rounded-lg shadow-lg"
+              className="relative h-[370px] flex items-center justify-center text-center text-white rounded-lg shadow-lg"
               style={{
                 backgroundImage: `url(${GlobalReachImg})`,
                 backgroundSize: "cover",

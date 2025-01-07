@@ -46,10 +46,10 @@ const Testimonials = () => {
                 className="w-24 h-24 mx-auto rounded-full mb-4"
               />
               <h3 className="text-xl font-bold mb-2">{review.name}</h3>
-              <p className="text-sm text-gray-500 mb-4">
+              <p className="text-sm mb-4">
                 <i>{review.country}</i>
               </p>
-              <p className="text-gray-700">{review.feedback}</p>
+              <p>{review.feedback}</p>
             </div>
           ))}
         </div>

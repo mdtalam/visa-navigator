@@ -10,12 +10,13 @@ const MyAddedVisas = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedVisa, setSelectedVisa] = useState(null);
+  const [viewMode, setViewMode] = useState("table"); // Default view mode is table
 
   useEffect(() => {
-    // Fetch visas added by the logged-in user
+    // Fetch visas added by the logged-in user using their email
     if (user?.email) {
       fetch(
-        `https://visa-navigator-server-theta.vercel.app/application/${user?.email}`
+        `https://visa-navigator-server-theta.vercel.app/visas?email=${user.email}`
       )
         .then((res) => res.json())
         .then((data) => {
@@ -42,7 +43,7 @@ const MyAddedVisas = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         fetch(
-          `https://visa-navigator-server-theta.vercel.app/application/delete/${id}`,
+          `https://visa-navigator-server-theta.vercel.app/visas/delete/${id}`,
           {
             method: "DELETE",
             headers: { "Content-Type": "application/json" },
@@ -68,7 +69,7 @@ const MyAddedVisas = () => {
       [e.target.name]: e.target.value,
     };
     fetch(
-      `https://visa-navigator-server-theta.vercel.app/application/update/${selectedVisa._id}`,
+      `https://visa-navigator-server-theta.vercel.app/visas/update/${selectedVisa._id}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -92,16 +93,82 @@ const MyAddedVisas = () => {
   };
 
   if (isLoading) {
-    <Loading></Loading>;
+    return <Loading />;
   }
 
   return (
     <div className="container mx-auto py-10 px-4">
       <h1 className="text-3xl font-bold text-center mb-6">My Added Visas</h1>
-      {myVisas?.length === 0 ? (
-        <p className="text-center">You have no added visa.</p>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      {/* Toggle Button */}
+      <div className="flex justify-start mb-4">
+        <button
+          onClick={() => setViewMode(viewMode === "table" ? "card" : "table")}
+          className="bg-primary text-white px-4 py-2 rounded hover:bg-secondary transition"
+        >
+          {viewMode === "table"
+            ? "Switch to Card View"
+            : "Switch to Table View"}
+        </button>
+      </div>
+
+      {/* Render Table View */}
+      {viewMode === "table" && (
+        <div className="overflow-x-auto">
+          <table className="table-auto w-full border-collapse border border-gray-300">
+            <thead>
+              <tr className="bg-gray-400">
+                <th className="border border-gray-300 px-4 py-2">Country</th>
+                <th className="border border-gray-300 px-4 py-2">Visa Type</th>
+                <th className="border border-gray-300 px-4 py-2">Fee (USD)</th>
+                <th className="border border-gray-300 px-4 py-2">
+                  Processing Time
+                </th>
+                <th className="border border-gray-300 px-4 py-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {myVisas.map((visa) => (
+                <tr key={visa._id}>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {visa.countryName}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {visa.visaType}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    ${visa.fee}
+                  </td>
+                  <td className="border border-gray-300 px-4 py-2">
+                    {visa.processingTime} days
+                  </td>
+                  <td className="border border-gray-300 px-4 space-y-2 md:space-y-0 py-2">
+                    <button
+                      onClick={() => {
+                        setSelectedVisa(visa);
+                        setIsModalOpen(true);
+                      }}
+                      className="bg-primary text-white px-3 py-1 rounded mr-2 hover:bg-secondary transition"
+                    >
+                      Update
+                    </button>
+                    <button
+                      onClick={() => handleDelete(visa._id)}
+                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* Render Card View */}
+      {viewMode === "card" && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {myVisas.map((visa) => (
             <div
               key={visa._id}
@@ -122,16 +189,6 @@ const MyAddedVisas = () => {
                 </p>
                 <p>
                   <strong>Fee:</strong> ${visa.fee}
-                </p>
-                <p>
-                  <strong>Age Restriction:</strong>{" "}
-                  {visa.ageRestriction || "None"}
-                </p>
-                <p>
-                  <strong>Validity:</strong> {visa.validity}
-                </p>
-                <p>
-                  <strong>Application Method:</strong> {visa.applicationMethod}
                 </p>
                 <div className="flex justify-between mt-4">
                   <button
@@ -159,13 +216,10 @@ const MyAddedVisas = () => {
       {/* Update Visa Modal */}
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)} title="Update Visa">
-          <form
-            onSubmit={handleUpdate}
-            className="space-y-4"
-          >
+          <form onSubmit={handleUpdate} className="space-y-4">
             {/* Country Name */}
             <div className="col-span-1">
-              <label className="block text-gray-600">Country Name</label>
+              <label className="block">Country Name</label>
               <input
                 type="text"
                 name="countryName"
@@ -183,7 +237,7 @@ const MyAddedVisas = () => {
 
             {/* Country Image */}
             <div className="col-span-1">
-              <label className="block text-gray-600">Country Image URL</label>
+              <label className="block">Country Image URL</label>
               <input
                 type="text"
                 name="countryImage"
@@ -201,7 +255,7 @@ const MyAddedVisas = () => {
 
             {/* Visa Type */}
             <div className="col-span-1">
-              <label className="block text-gray-600">Visa Type</label>
+              <label className="block">Visa Type</label>
               <select
                 name="visaType"
                 defaultValue={selectedVisa?.visaType}
@@ -221,7 +275,7 @@ const MyAddedVisas = () => {
 
             {/* Processing Time */}
             <div className="col-span-1">
-              <label className="block text-gray-600">
+              <label className="block">
                 Processing Time (days)
               </label>
               <input
@@ -241,7 +295,7 @@ const MyAddedVisas = () => {
 
             {/* Fee */}
             <div className="col-span-1">
-              <label className="block text-gray-600">Fee (USD)</label>
+              <label className="block">Fee (USD)</label>
               <input
                 type="number"
                 name="fee"
@@ -256,7 +310,7 @@ const MyAddedVisas = () => {
 
             {/* Validity */}
             <div className="col-span-1">
-              <label className="block text-gray-600">Validity</label>
+              <label className="block">Validity</label>
               <input
                 type="text"
                 name="validity"
@@ -271,7 +325,7 @@ const MyAddedVisas = () => {
 
             {/* Application Method */}
             <div className="col-span-1">
-              <label className="block text-gray-600">Application Method</label>
+              <label className="block">Application Method</label>
               <input
                 type="text"
                 name="applicationMethod"
@@ -289,7 +343,7 @@ const MyAddedVisas = () => {
 
             {/* Required Documents */}
             <div className="col-span-1">
-              <label className="block text-gray-600">
+              <label className="block">
                 Required Documents (Comma Separated)
               </label>
               <input
@@ -310,7 +364,7 @@ const MyAddedVisas = () => {
 
             {/* Description */}
             <div className="col-span-2">
-              <label className="block text-gray-600">Description</label>
+              <label className="block">Description</label>
               <textarea
                 name="description"
                 defaultValue={selectedVisa?.description}
@@ -327,8 +381,8 @@ const MyAddedVisas = () => {
             </div>
 
             {/* Applicant's First Name */}
-            <div className="col-span-1">
-              <label className="block text-gray-600">First Name</label>
+            {/* <div className="col-span-1">
+              <label className="block">First Name</label>
               <input
                 type="text"
                 name="firstName"
@@ -342,11 +396,11 @@ const MyAddedVisas = () => {
                 className="w-full px-3 py-2 border rounded"
                 required
               />
-            </div>
+            </div> */}
 
             {/* Applicant's Last Name */}
-            <div className="col-span-1">
-              <label className="block text-gray-600">Last Name</label>
+            {/* <div className="col-span-1">
+              <label className="block">Last Name</label>
               <input
                 type="text"
                 name="lastName"
@@ -357,11 +411,11 @@ const MyAddedVisas = () => {
                 className="w-full px-3 py-2 border rounded"
                 required
               />
-            </div>
+            </div> */}
 
             {/* Age Restriction */}
             <div className="col-span-1">
-              <label className="block text-gray-600">Age Restriction</label>
+              <label className="block">Age Restriction</label>
               <input
                 type="number"
                 name="ageRestriction"
@@ -377,8 +431,8 @@ const MyAddedVisas = () => {
             </div>
 
             {/* Applied Date */}
-            <div className="col-span-1">
-              <label className="block text-gray-600">Applied Date</label>
+            {/* <div className="col-span-1">
+              <label className="block">Applied Date</label>
               <input
                 type="date"
                 name="appliedDate"
@@ -392,11 +446,11 @@ const MyAddedVisas = () => {
                 className="w-full px-3 py-2 border rounded"
                 required
               />
-            </div>
+            </div> */}
 
             {/* Applicant's Email */}
             <div className="col-span-2">
-              <label className="block text-gray-600">Applicant's Email</label>
+              <label className="block">Applicant's Email</label>
               <input
                 type="email"
                 name="applicantEmail"

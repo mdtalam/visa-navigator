@@ -39,7 +39,7 @@ const LatestVisas = () => {
       <Slide triggerOnce direction="left">
       <h1 className="text-3xl font-bold text-center mb-6">Latest Visas</h1>
       </Slide>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:h-[880px]">
         {latestVisas.length > 0 ? (
           latestVisas.map((visa) => (
             <div
@@ -52,21 +52,21 @@ const LatestVisas = () => {
                 className="w-full h-56 object-cover"
               />
               <div className="p-4">
-                <h2 className="text-xl font-bold mb-2">Country: {visa.countryName}</h2>
+                <h2 className="text-lg font-bold mb-2">{visa.countryName}</h2>
                 <p>
-                  <strong>Visa Type:</strong> {visa.visaType}
+                  {visa.visaType}
                 </p>
-                <p>
+                {/* <p>
                   <strong>Processing Time:</strong> {visa.processingTime} days
-                </p>
+                </p> */}
                 <p>
-                  <strong>Fee:</strong> ${visa.fee}
+                  ${visa.fee}
                 </p>
-                <p>
+                {/* <p>
                   <strong>Validity:</strong> {visa.validity}
-                </p>
+                </p> */}
                 <p>
-                  <strong>Application method:</strong> {visa.applicationMethod}
+                  {visa.applicationMethod}
                 </p>
                 <button
                   onClick={() => navigate(`/visa-details/${visa._id}`)}

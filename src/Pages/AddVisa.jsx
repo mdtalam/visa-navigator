@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Swal from "sweetalert2";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const AddVisa = () => {
+  const { user } = useContext(AuthContext);
   const [formValues, setFormValues] = useState({
     countryImage: "",
     countryName: "",
@@ -27,13 +29,29 @@ const AddVisa = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // send data to server
+
+    if (!user || !user.email) {
+      Swal.fire({
+        title: "Error!",
+        text: "You need to be logged in to add a visa.",
+        icon: "error",
+        confirmButtonText: "Close",
+      });
+      return;
+    }
+
+    const visaData = {
+      ...formValues,
+      email: user.email, // Add the user's email
+    };
+
+    // Send data to the server
     fetch("https://visa-navigator-server-theta.vercel.app/visas", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(formValues),
+      body: JSON.stringify(visaData),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -62,6 +80,15 @@ const AddVisa = () => {
           const checkboxes = document.querySelectorAll("input[type=checkbox]");
           checkboxes.forEach((checkbox) => (checkbox.checked = false));
         }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        Swal.fire({
+          title: "Error!",
+          text: "Failed to add visa. Please try again later.",
+          icon: "error",
+          confirmButtonText: "Close",
+        });
       });
   };
 
@@ -73,10 +100,7 @@ const AddVisa = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Country Image */}
             <div>
-              <label
-                className="block text-gray-700 mb-2"
-                htmlFor="countryImage"
-              >
+              <label className="block mb-2" htmlFor="countryImage">
                 Country Image URL
               </label>
               <input
@@ -94,7 +118,7 @@ const AddVisa = () => {
 
             {/* Country Name */}
             <div>
-              <label className="block text-gray-700 mb-2" htmlFor="countryName">
+              <label className="block mb-2" htmlFor="countryName">
                 Country Name
               </label>
               <input
@@ -112,7 +136,7 @@ const AddVisa = () => {
 
             {/* Visa Type */}
             <div>
-              <label className="block text-gray-700 mb-2" htmlFor="visaType">
+              <label className="block mb-2" htmlFor="visaType">
                 Visa Type
               </label>
               <select
@@ -126,17 +150,14 @@ const AddVisa = () => {
                 <option value="Tourist visa">Tourist Visa</option>
                 <option value="Student visa">Student Visa</option>
                 <option value="Official visa">Official Visa</option>
-                <option value="Business visa">Business visa</option>
-                <option value="Transit visa">Transit visa</option>
+                <option value="Business visa">Business Visa</option>
+                <option value="Transit visa">Transit Visa</option>
               </select>
             </div>
 
             {/* Processing Time */}
             <div>
-              <label
-                className="block text-gray-700 mb-2"
-                htmlFor="processingTime"
-              >
+              <label className="block mb-2" htmlFor="processingTime">
                 Processing Time
               </label>
               <input
@@ -144,10 +165,7 @@ const AddVisa = () => {
                 id="processingTime"
                 value={formValues.processingTime}
                 onChange={(e) =>
-                  setFormValues({
-                    ...formValues,
-                    processingTime: e.target.value,
-                  })
+                  setFormValues({ ...formValues, processingTime: e.target.value })
                 }
                 className="w-full px-4 py-2 border rounded-lg"
                 placeholder="Enter processing time"
@@ -157,9 +175,7 @@ const AddVisa = () => {
 
             {/* Required Documents */}
             <div className="md:col-span-2">
-              <label className="block text-gray-700 mb-2">
-                Required Documents
-              </label>
+              <label className="block mb-2">Required Documents</label>
               <div className="space-y-2">
                 {[
                   "Valid passport",
@@ -183,7 +199,7 @@ const AddVisa = () => {
 
             {/* Description */}
             <div className="md:col-span-2">
-              <label className="block text-gray-700 mb-2" htmlFor="description">
+              <label className="block mb-2" htmlFor="description">
                 Description
               </label>
               <textarea
@@ -200,10 +216,7 @@ const AddVisa = () => {
 
             {/* Age Restriction */}
             <div>
-              <label
-                className="block text-gray-700 mb-2"
-                htmlFor="ageRestriction"
-              >
+              <label className="block mb-2" htmlFor="ageRestriction">
                 Age Restriction
               </label>
               <input
@@ -211,10 +224,7 @@ const AddVisa = () => {
                 id="ageRestriction"
                 value={formValues.ageRestriction}
                 onChange={(e) =>
-                  setFormValues({
-                    ...formValues,
-                    ageRestriction: e.target.value,
-                  })
+                  setFormValues({ ...formValues, ageRestriction: e.target.value })
                 }
                 className="w-full px-4 py-2 border rounded-lg"
                 placeholder="Enter age restriction"
@@ -223,7 +233,7 @@ const AddVisa = () => {
 
             {/* Fee */}
             <div>
-              <label className="block text-gray-700 mb-2" htmlFor="fee">
+              <label className="block mb-2" htmlFor="fee">
                 Fee
               </label>
               <input
@@ -240,7 +250,7 @@ const AddVisa = () => {
 
             {/* Validity */}
             <div>
-              <label className="block text-gray-700 mb-2" htmlFor="validity">
+              <label className="block mb-2" htmlFor="validity">
                 Validity
               </label>
               <input
@@ -258,7 +268,7 @@ const AddVisa = () => {
             {/* Application Method */}
             <div>
               <label
-                className="block text-gray-700 mb-2"
+                className="block mb-2"
                 htmlFor="applicationMethod"
               >
                 Application Method

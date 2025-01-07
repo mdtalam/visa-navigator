@@ -22,8 +22,7 @@ const VisaDetails = () => {
   } = loadedData;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext); // Get the user context
 
   // Utility function to get current date in YYYY-MM-DD format
   const getCurrentDate = () => {
@@ -101,7 +100,7 @@ const VisaDetails = () => {
         alt={countryName}
         className="w-full h-80 object-cover rounded-lg mb-4"
       />
-      <div className="text-gray-800 space-y-4 *:text-lg">
+      <div className="space-y-4 *:text-lg">
         <p>
           <strong>Visa Type:</strong> {visaType}
         </p>
@@ -129,24 +128,30 @@ const VisaDetails = () => {
       </div>
 
       {/* Apply for Visa Button */}
-      <button
-        className="text-lg mt-6 px-4 py-2 bg-primary text-white rounded hover:bg-secondary transition"
-        onClick={() => setIsModalOpen(true)}
-      >
-        Apply for the Visa
-      </button>
+      {user ? (
+        <button
+          className="text-lg mt-6 px-4 py-2 bg-primary text-white rounded hover:bg-secondary transition"
+          onClick={() => setIsModalOpen(true)}
+        >
+          Apply for the Visa
+        </button>
+      ) : (
+        <p className="text-red-500 mt-6">
+          You must be logged in to apply for a visa.
+        </p>
+      )}
 
       {/* Application Modal */}
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)} title="Apply for Visa">
           <form onSubmit={handleApply} className="space-y-4">
             <div>
-              <label className="block text-gray-600">Email</label>
+              <label className="block text-black">Email</label>
               <input
                 type="email"
                 value={user?.email}
                 readOnly
-                className="w-full px-3 py-2 border rounded bg-gray-100"
+                className="w-full px-3 py-2 border rounded"
               />
             </div>
             <div>
@@ -186,7 +191,7 @@ const VisaDetails = () => {
                 type="text"
                 value={`$${fee}`}
                 readOnly
-                className="w-full px-3 py-2 border rounded bg-gray-100"
+                className="w-full px-3 py-2 border rounded"
               />
             </div>
             <button

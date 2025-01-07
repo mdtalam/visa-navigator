@@ -7,7 +7,6 @@ import "react-tooltip/dist/react-tooltip.css";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Provider/AuthProvider";
 
-
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, logOutUser, updateUserProfile, setUser } =
@@ -17,10 +16,27 @@ const Navbar = () => {
   const [newDisplayName, setNewDisplayName] = useState(user?.displayName || "");
   const [newPhotoURL, setNewPhotoURL] = useState(user?.photoURL || "");
 
-  //
   const [theme, setTheme] = useState("light");
 
-  
+  const [isSticky, setIsSticky] = useState(false); // State to track sticky navbar
+
+  // Handle the scroll event to make navbar sticky
+  const handleScroll = () => {
+    if (window.scrollY > 10) {
+      setIsSticky(true);
+    } else {
+      setIsSticky(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    // Clean up the event listener
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     // Check for saved theme in localStorage
@@ -58,12 +74,14 @@ const Navbar = () => {
         text: "Failed to update profile. Please try again.",
         icon: "error",
         confirmButtonText: "Close",
-      });      
+      });
     }
   };
 
   return (
-    <nav className="bg-primary text-white">
+    <nav
+      className={`bg-primary text-white w-full ${isSticky ? "sticky top-0 z-50 shadow-lg bg-opacity-90 transition-all duration-300 ease-in-out" : "relative transition-all duration-300 ease-in-out"}`}
+    >
       <div className="container mx-auto flex justify-between items-center p-4">
         {/* Website Logo */}
         <div className="text-xl font-bold">
@@ -96,7 +114,9 @@ const Navbar = () => {
               All Visas
             </NavLink>
           </li>
-          <li>
+          {
+            user && (
+              <li>
             <NavLink
               to="/add-visa"
               className={({ isActive }) =>
@@ -108,7 +128,11 @@ const Navbar = () => {
               Add Visa
             </NavLink>
           </li>
-          <li>
+            )
+          }
+          {
+            user && (
+              <li>
             <NavLink
               to="/my-added-visas"
               className={({ isActive }) =>
@@ -120,7 +144,11 @@ const Navbar = () => {
               My Added Visas
             </NavLink>
           </li>
-          <li>
+            )
+          }
+          {
+            user && (
+              <li>
             <NavLink
               to="/my-visa-applications"
               className={({ isActive }) =>
@@ -132,6 +160,8 @@ const Navbar = () => {
               My Visa Applications
             </NavLink>
           </li>
+            )
+          }
         </ul>
 
         {/* Conditional Authentication Buttons */}
@@ -314,65 +344,32 @@ const Navbar = () => {
                 My Visa Applications
               </NavLink>
             </li>
-            <div className="flex flex-col space-y-4">
+            <div className="pt-4">
               {!user ? (
                 <>
                   <Link
                     to="/auth/login"
-                    className="bg-secondary px-4 py-2 rounded hover:bg-accent transition"
+                    className="block text-center px-4 py-2 bg-secondary rounded my-2"
                   >
                     Login
                   </Link>
                   <Link
                     to="/auth/register"
-                    className="bg-accent px-4 py-2 rounded hover:bg-secondary transition"
+                    className="block text-center px-4 py-2 bg-accent rounded my-2"
                   >
                     Register
                   </Link>
                 </>
               ) : (
                 <>
-                  <div>
-                    <img
-                      src={user?.photoURL}
-                      alt="User"
-                      className="w-10 h-10 rounded-full cursor-pointer mb-4 mx-auto"
-                      data-tooltip-id="profileTooltip"
-                      data-tooltip-content={user?.displayName || "User Profile"}
-                      
-                    />
-                    {/* Tooltip */}
-                    <Tooltip
-                      id="profileTooltip"
-                      place="bottom"
-                      effect="solid"
-                      className="bg-gray-800 text-white px-2 py-1 rounded"
-                    />
-                  <button
-                    onClick={() => setIsModalOpen(true)}
-                    className="bg-accent px-4 py-2 rounded block md:hidden lg:hidden hover:bg-accent transition"
-                  >
-                    Update Profile
-                  </button>
-                  </div>
                   <button
                     onClick={logOutUser}
-                    className="bg-secondary px-4 py-2 rounded hover:bg-accent transition"
+                    className="block text-center px-4 py-2 bg-secondary rounded my-2"
                   >
                     Logout
                   </button>
                 </>
-
               )}
-              <button
-                onClick={toggleTheme}
-                className="text-xl bg-primary text-white px-4 py-2 rounded transition flex items-center mx-auto"
-              >
-                {theme === "light" ? <FaMoon /> : <FaSun />}
-                <span className="ml-2">
-                  {/* {theme === "light" ? "Dark Mode" : "Light Mode"} */}
-                </span>
-              </button>
             </div>
           </ul>
         </div>

@@ -48,9 +48,7 @@ import PrivetRoute from "./PrivetRoute";
         },
         {
             path: "/visa-details/:id",
-            element: <PrivetRoute>
-                <VisaDetails></VisaDetails>
-                </PrivetRoute>,
+            element: <VisaDetails></VisaDetails>,
             loader: ({params}) => fetch(`https://visa-navigator-server-theta.vercel.app/visas/${params.id}`)
         },
       ]
