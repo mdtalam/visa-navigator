@@ -17,33 +17,33 @@ Visa Navigator is an intuitive web application designed to streamline visa manag
 Visa Navigator is a comprehensive and user-friendly platform designed to simplify the complexities of visa management and applications. Whether you're an individual traveler, a business professional, or an immigration consultant, Visa Navigator empowers you to streamline the visa process with ease.
 
 1. Explore All Visas:
-. Browse a wide range of visa types, categorized by purpose, destination, and requirements. Gain access to detailed visa descriptions, eligibility criteria, and processing guidelines.
+* Browse a wide range of visa types, categorized by purpose, destination, and requirements. Gain access to detailed visa descriptions, eligibility criteria, and processing guidelines.
 
 
 2. Visa Application Tracking:
-. Keep track of your submitted applications with real-time updates, so you’re always informed about the progress of your visa status.
+* Keep track of your submitted applications with real-time updates, so you’re always informed about the progress of your visa status.
 
 
 3. Add and Manage Visas:
-. For users managing multiple applications or consulting for others, easily add, edit, and organize visas.
+* For users managing multiple applications or consulting for others, easily add, edit, and organize visas.
 
 4. Personalized Dashboard:
-. Log in to access your personalized dashboard to manage your profile, view your visa history, and update account settings, including a profile picture and display name.
+* Log in to access your personalized dashboard to manage your profile, view your visa history, and update account settings, including a profile picture and display name.
 
 5. Authentication and Security:
-. Securely log in or register to save your data, ensuring all your sensitive information is protected.
+* Securely log in or register to save your data, ensuring all your sensitive information is protected.
 
 6. Theme Customization:
-. Toggle between light and dark modes for a comfortable viewing experience, tailored to your preferences.
+* Toggle between light and dark modes for a comfortable viewing experience, tailored to your preferences.
 
 
 ## Benefits
 
-. Convenience: Simplifies visa management and reduces paperwork.
+* Convenience: Simplifies visa management and reduces paperwork.
 
-. Efficiency: Access all your visa needs in one place with a smooth and organized workflow.
+* Efficiency: Access all your visa needs in one place with a smooth and organized workflow.
 
-. Accessibility: Intuitive navigation, making it easy for users of all experience levels.
+* Accessibility: Intuitive navigation, making it easy for users of all experience levels.
 
 Whether planning your next travel adventure or managing professional immigration workflows, Visa Navigator is your ultimate tool for a seamless visa experience.
 ## Features of the Visa Navigator Website
